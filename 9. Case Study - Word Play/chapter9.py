@@ -330,5 +330,5 @@ ex9_9()
 
 
 # TODO: Modify ex7-ex9 for better output
-# TODO: Modify ex8 for better encapsulation
+# TODO: Modify ex7 and ex8 for better encapsulation
 # TODO: Modify ex9 to check for two possibilities in a year
