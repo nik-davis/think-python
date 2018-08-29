@@ -1,9 +1,11 @@
 def converttobinary(num):
-    list = []
+    # list = []
+    binary_str =''
     while num > 0:
         remainder = num % 2
-        list.insert(0, remainder)
+        binary_str = str(remainder) + binary_str
+        # list.insert(0, remainder)
         num = num // 2
-    return list
+    return binary_str
 
 print(converttobinary(156))
