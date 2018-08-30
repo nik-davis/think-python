@@ -169,7 +169,7 @@ def scan_words():
     '''Scan words in words.txt and print out anagrams. Takes a very long time
     '''
 
-    fin = open('10. Lists\words.txt')
+    fin = open('10. Lists/words.txt')
     word_list = []
     for line in fin:
         word = line.strip()
@@ -314,6 +314,93 @@ def ex10_8():
         num_tests, average))
 
 
+# 10.9. Write a function that reads the file words.txt and builds a list 
+# with one element per word. Write two versions of this function, one 
+# using the append method and the other using the idiom t = t + [x]. 
+# Which one takes longer to run? Why? 
+
+
+import time
+
+
+def build_list_a():
+    '''Reads lines from a file and builds a list, using append'''
+    fin = open('10. Lists/words.txt')
+
+    t = []
+
+    for line in fin:
+        word = line.strip()
+        t.append(word)
+
+    return t
+
+
+def build_list_b():
+    '''Reads lines from a file and builds a list, using + '''
+    fin = open('10. Lists/words.txt')
+
+    t = []
+
+    for line in fin:
+        word = line.strip()
+        t = t + [word]
+    
+    return t
+
+
+def ex10_9():
+    print('10.9. Testing list building:')
+    
+    print(' Append:')
+    start_time = time.time()
+    a = build_list_a()
+    elapsed_time = round(time.time() - start_time, 2)
+
+    print('  Length:', len(a))
+    print('  First ten elements:', a[:10])
+    print('  Time taken:', elapsed_time, 'seconds.')
+
+    print(' Using +:')
+    start_time = time.time()
+    b = build_list_b()
+    elapsed_time = round(time.time() - start_time, 2)
+
+    print('  Length:', len(b))
+    print('  First ten elements:', b[:10])
+    print('  Time taken:', elapsed_time, 'seconds.')
+    
+
+# 10.10. Write a function called in_bisect that takes a sorted list and a 
+# target value and returns True if the word is in the list and False if it’s not.
+
+def in_bisect(t, word):
+    mid_index = len(t)//2
+    
+
+    bisect_word = t[mid_index]
+    
+    if word == bisect_word:
+        return True
+    elif mid_index == 0:
+        print(len(t))
+        return False
+    elif word < bisect_word:
+        return in_bisect(t[:mid_index], word)
+    elif word > bisect_word:
+        return in_bisect(t[mid_index:], word)
+    
+    return False
+
+
+def ex10_10():
+    t = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+    word = '2'
+    
+    s = t[:]
+    s.sort()
+
+    print(in_bisect(t, word))
 
 # Run solutions
 # ex10_1()
@@ -323,4 +410,6 @@ def ex10_8():
 # ex10_5()
 # ex10_6()
 # ex10_7()
-ex10_8()
+# ex10_8()
+# ex10_9()
+ex10_10()
