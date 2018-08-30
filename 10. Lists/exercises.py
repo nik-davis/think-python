@@ -374,23 +374,31 @@ def ex10_9():
 # 10.10. Write a function called in_bisect that takes a sorted list and a 
 # target value and returns True if the word is in the list and False if it’s not.
 
-def in_bisect(t, word):
-    mid_index = len(t)//2
-    
 
-    bisect_word = t[mid_index]
-    
-    if word == bisect_word:
-        return True
-    elif mid_index == 0:
-        print(len(t))
+def in_bisect(word_list, word):
+    '''Checks whether a word is in a list using bisection search.
+
+    Precondition: the words in the list are sorted
+
+    word_list: list of strings
+    word: string
+
+    returns: True if the word is in the list; False otherwise
+    '''
+    if len(word_list) == 0:
+        print(len(word_list))
         return False
-    elif word < bisect_word:
-        return in_bisect(t[:mid_index], word)
-    elif word > bisect_word:
-        return in_bisect(t[mid_index:], word)
+
+    i = len(word_list) // 2
+    if word == word_list[i]:
+        return True
     
-    return False
+    if word < word_list[i]:
+        # Search first half
+        return in_bisect(word_list[:i], word)
+    else:
+        # Search second half
+        return in_bisect(word_list[i+1:], word)
 
 
 def ex10_10():
@@ -401,6 +409,7 @@ def ex10_10():
     s.sort()
 
     print(in_bisect(t, word))
+
 
 # Run solutions
 # ex10_1()
