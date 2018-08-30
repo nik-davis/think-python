@@ -463,12 +463,12 @@ def find_pairs():
     #                 print(word1, word2)
     #                 pair_list.append(word1)
 
-    for word1 in word_list:
-        if in_bisect(word_list, word1[::-1]) and word1 != word1[::-1]:
-            if word1 not in pair_list:
-                pair_list.append(word1)
-            if word1[::-1] not in pair_list:
-                pair_list.append(word1[::-1])
+    for word in word_list:
+        if in_bisect(word_list, word[::-1]) and word != word[::-1]:
+            if word not in pair_list:
+                pair_list.append(word)
+            if word[::-1] not in pair_list:
+                pair_list.append(word[::-1])
     return pair_list
 
 def ex10_11():
@@ -494,6 +494,42 @@ def ex10_11():
 #   2. Can you find any words that are three-way interlocked; that is, 
 #   every third letter forms a word, starting from the first, second or third?
 
+def is_real_word(word_list, word):
+    '''Determines if supplied word is real.
+
+    word_list: list of strings
+    word: string
+
+    returns: bool
+    '''
+    return in_bisect(word_list, word)
+
+def interlock(word1, word2):
+    '''Alternates each letter of supplied words to form interlocking word
+
+    word1: string
+    word2: string
+
+    returns: string
+    '''
+    inter_word = ''
+    for i in range(len(word1)):
+        inter_word = inter_word + word1[i]
+        inter_word = inter_word + word2[i]
+    return inter_word
+
+def ex10_12():
+    '''Check equal length pairs in list for interlocking
+    '''
+    word_list = build_word_list()
+    # test = interlock('shoe', 'cold')
+    # print(is_real_word(word_list, test))
+    for word1 in word_list:
+        for word2 in word_list:
+            if len(word1) == len(word2):
+                test_word = interlock(word1, word2)
+                if is_real_word(word_list, test_word):
+                    print(word1, '+', word2, '=', test_word)
 
 
 
@@ -511,3 +547,4 @@ def ex10_11():
 # ex10_9()
 # ex10_10()
 # ex10_11()
+ex10_12()
