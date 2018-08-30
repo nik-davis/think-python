@@ -494,6 +494,7 @@ def ex10_11():
 #   2. Can you find any words that are three-way interlocked; that is, 
 #   every third letter forms a word, starting from the first, second or third?
 
+
 def is_real_word(word_list, word):
     '''Determines if supplied word is real.
 
@@ -504,38 +505,50 @@ def is_real_word(word_list, word):
     '''
     return in_bisect(word_list, word)
 
-def interlock(word1, word2):
-    '''Alternates each letter of supplied words to form interlocking word
 
-    word1: string
-    word2: string
+def interlock(word_list, word):
+    '''Checks if word made up of two interlocked words
 
-    returns: string
+    word_list: list of strings
+    word: string
+
+    returns: bool
     '''
-    inter_word = ''
-    for i in range(len(word1)):
-        inter_word = inter_word + word1[i]
-        inter_word = inter_word + word2[i]
-    return inter_word
+    evens = word[::2]
+    odds  = word[1::2]
+    return in_bisect(word_list, evens) and in_bisect(word_list, odds)
+
+
+def interlock_general(word_list, word, n):
+    '''Checks whether a word contains n interleaved words.
+
+    word_list: list of strings
+    word: string
+    n: number of interleaved words
+    '''
+    for i in range(n):
+        inter = word[i::n]
+        if not in_bisect(word_list, inter):
+            return False
+    return True
+
 
 def ex10_12():
-    '''Check equal length pairs in list for interlocking
+    '''Checks for interlocking words
     '''
     word_list = build_word_list()
-    # test = interlock('shoe', 'cold')
-    # print(is_real_word(word_list, test))
-    for word1 in word_list:
-        for word2 in word_list:
-            if len(word1) == len(word2):
-                test_word = interlock(word1, word2)
-                if is_real_word(word_list, test_word):
-                    print(word1, '+', word2, '=', test_word)
 
+    for word in word_list:
+        if interlock(word_list, word):
+            print(word[::2], '+', word[1::2], '=', word)
 
-
+    for word in word_list:
+        if interlock_general(word_list, word, 3):
+            print(word[0::3], '+', word[1::3], '+', word[2::3],'=', word)
 
 
 # Run solutions
+#
 # ex10_1()
 # ex10_2()
 # ex10_3()
@@ -547,4 +560,4 @@ def ex10_12():
 # ex10_9()
 # ex10_10()
 # ex10_11()
-ex10_12()
+# ex10_12()
