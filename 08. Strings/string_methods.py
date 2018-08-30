@@ -1,22 +1,22 @@
 string = 'hello world'
 
-# First letter capitalised, rest lowercase
+# Capitalize: First letter capitalised, rest lowercase
 new_string = string.capitalize()
 print('Capitalize:', string, '->', new_string)
 
-# Similar to lowercasing but more aggressive, intended to remove all
-# case distinctions
+# Casefold: Similar to lowercasing but more aggressive, intended to 
+# remove all case distinctions
 string = 'Hello WORLDß'
 case_fold = string.casefold()
 print('Casefold:', string, case_fold)
 
-# Returns centered string of length 'width'. Optional: specify fillchar
-# Returns original string if width < len(string)
+# Center: Returns centered string of length 'width'. 
+# Optional: specify fillchar. Returns original string if width < len(string)
 string = 'Hello world!'
 center = string.center(20, '-')
 print('Center: ', '|' + center + '|')
 
-# Count non-overlapping occurrences of substring in optional [start, end] range
+# Count: Count non-overlapping occurrences of substring in optional [start, end] range
 string = 'Hello hello world'
 count = string.count('ello', 0, 12)
 print('Count:', count)
@@ -30,9 +30,6 @@ string = 'Hello World'
 ends = string.endswith('or', 0, -2)
 print('Endswith:', ends)
 # startswith(prefix[, start[, end]]) 
-
-
-
 
 # expandtabs(tabsize=8)
 string = 'Hello\tbig\twide\tworld\t'
