@@ -314,10 +314,10 @@ def ex10_8():
         num_tests, average))
 
 
-# 10.9. Write a function that reads the file words.txt and builds a list 
-# with one element per word. Write two versions of this function, one 
-# using the append method and the other using the idiom t = t + [x]. 
-# Which one takes longer to run? Why? 
+# 10.9. Write a function that reads the file words.txt and builds a list
+# with one element per word. Write two versions of this function, one
+# using the append method and the other using the idiom t = t + [x].
+# Which one takes longer to run? Why?
 
 
 import time
@@ -345,13 +345,13 @@ def build_list_b():
     for line in fin:
         word = line.strip()
         t = t + [word]
-    
+
     return t
 
 
 def ex10_9():
     print('10.9. Testing list building:')
-    
+
     print(' Append:')
     start_time = time.time()
     a = build_list_a()
@@ -369,9 +369,9 @@ def ex10_9():
     print('  Length:', len(b))
     print('  First ten elements:', b[:10])
     print('  Time taken:', elapsed_time, 'seconds.')
-    
 
-# 10.10. Write a function called in_bisect that takes a sorted list and a 
+
+# 10.10. Write a function called in_bisect that takes a sorted list and a
 # target value and returns True if the word is in the list and False if it’s not.
 
 
@@ -386,13 +386,12 @@ def in_bisect(word_list, word):
     returns: True if the word is in the list; False otherwise
     '''
     if len(word_list) == 0:
-        print(len(word_list))
         return False
 
     i = len(word_list) // 2
     if word == word_list[i]:
         return True
-    
+
     if word < word_list[i]:
         # Search first half
         return in_bisect(word_list[:i], word)
@@ -401,14 +400,103 @@ def in_bisect(word_list, word):
         return in_bisect(word_list[i+1:], word)
 
 
+def in_bisect_alt(word_list, word):
+    '''From solution: Checks whether a word is in a list using bisection search.
+
+    Precondition: the words in the list are sorted
+
+    word_list: list of strings
+    word: string
+    '''
+    i = bisect.bisect_left(word_list, word)
+    if i == len(word_list):
+        return False
+
+    return word_list[i] == word
+
+
 def ex10_10():
     t = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     word = '2'
-    
+
     s = t[:]
     s.sort()
 
     print(in_bisect(t, word))
+
+
+# 10.11. Two words are a “reverse pair” if each is the reverse of the other.
+# Write a program that finds all the reverse pairs in the word list.
+
+
+def build_word_list():
+    '''Builds word list from text file
+
+    returns: list of strings
+    '''
+    fin = open('10. Lists/words.txt')
+    word_list = []
+
+    for line in fin:
+        word = line.strip()
+        word_list.append(word)
+
+    return word_list
+
+
+def is_reverse_pair(word1, word2):
+    '''First attempt at verifying reverse pairs. Too slow.'''
+    return word1 == word2[::-1]
+
+def find_pairs():
+    '''Populate pair list with all reverse-word pairs
+    
+    returns: list of strings
+    '''
+    pair_list = []
+
+    # Slow, obsolete:
+    # for word1 in word_list:
+    #     for word2 in word_list:
+    #         if word1 != word2:
+    #             if is_reverse_pair(word1, word2):
+    #                 print(word1, word2)
+    #                 pair_list.append(word1)
+
+    for word1 in word_list:
+        if in_bisect(word_list, word1[::-1]) and word1 != word1[::-1]:
+            if word1 not in pair_list:
+                pair_list.append(word1)
+            if word1[::-1] not in pair_list:
+                pair_list.append(word1[::-1])
+    return pair_list
+
+def ex10_11():
+    '''pair_list given as search takes a while, run find_pairs() instead for new search'''
+    word_list = build_word_list()
+    # find_pairs()
+    pair_list = ['abut', 'tuba', 'ad', 'da', 'ados', 'soda', 'agar', 'raga', 'agas', 'saga', 'agenes', 'senega', 'ah', 'ha', 'aider', 'redia', 'airts', 'stria', 'ajar', 'raja', 'alif', 'fila', 'am', 'ma', 'amen', 'nema', 'amis', 'sima', 'an', 'na', 'anger', 'regna', 'animal', 'lamina', 'animes', 'semina', 'anon', 'nona', 'ante', 'etna', 'are', 'era', 'ares', 'sera', 'aril', 'lira', 'arris', 'sirra', 'arum', 'mura', 'at', 'ta', 'ate', 'eta', 'ates', 'seta', 'auks', 'skua', 'avid', 'diva', 'avo', 'ova', 'ay', 'ya', 'bad', 'dab', 'bag', 'gab', 'bal', 'lab', 'bals', 'slab', 'ban', 'nab', 'bard', 'drab', 'bas', 'sab', 'bat', 'tab', 'bats', 'stab', 'bed', 'deb', 'ben', 'neb', 'bid', 'dib', 'big', 'gib', 'bin', 'nib', 'bins', 'snib', 'bird', 'drib', 'bis', 'sib', 'bog', 'gob', 'bos', 'sob', 'bots', 'stob', 'bows', 'swob', 'brad', 'darb', 'brag', 'garb', 'bud', 'dub', 'bun', 'nub', 'buns', 'snub', 'bur', 'rub', 'burd', 'drub', 'burg', 'grub', 'bus', 'sub', 'but', 'tub', 'buts', 'stub', 'cam', 'mac', 'cap', 'pac', 'cares', 'serac', 'cod', 'doc', 'cram', 'marc', 'cud', 'duc', 'dag', 'gad', 'dah', 'had', 'dahs', 'shad', 'dam', 'mad', 'dap', 'pad', 'dart', 'trad', 'daw', 'wad', 'debut', 'tubed', 'decal', 'laced', 'dedal', 'laded', 'deem', 'meed', 'deep', 'peed', 'deeps', 'speed', 'deer', 'reed', 'dees', 'seed', 'defer', 'refed', 'degami', 'imaged', 'deifier', 'reified', 'deil', 'lied', 'deke', 'eked', 'del', 'led', 'delf', 'fled', 'deliver', 'reviled', 'dels', 'sled', 'demit', 'timed', 'denier', 'reined', 'denies', 'seined', 'denim', 'mined', 'dens', 'sned', 'depot', 'toped', 'depots', 'stoped', 'derat', 'tared', 'derats', 'stared', 'dessert', 'tressed', 'desserts', 'stressed', 'devas', 'saved', 'devil', 'lived', 'dew', 'wed', 'dewans', 'snawed', 'dexes', 'sexed', 'dial', 'laid', 'dialer', 'relaid', 'diaper', 'repaid', 'dig', 'gid', 'dim', 'mid', 'dinar', 'ranid', 'diols', 'sloid', 'dirts', 'strid', 'do', 'od', 'dog', 'god', 'dom', 'mod', 'don', 'nod', 'doom', 'mood', 'door', 'rood', 'dor', 'rod', 'dormin', 'nimrod', 'dorp', 'prod', 'dos', 'sod', 'dot', 'tod', 'drail', 'liard', 'draw', 'ward', 'drawer', 'reward', 'draws', 'sward', 'dray', 'yard', 'dual', 'laud', 'ducs', 'scud', 'duel', 'leud', 'duo', 'oud', 'dup', 'pud', 'dups', 'spud', 'eat', 'tae', 'edile', 'elide', 'edit', 'tide', 'eel', 'lee', 'eh', 'he', 'elides', 'sedile', 'em', 'me', 'emes', 'seme', 'emir', 'rime', 'emit', 'time', 'emits', 'stime', 'enol', 'lone', 'er', 're', 'ergo', 'ogre', 'eros', 'sore', 'ervil', 'livre', 'etas', 'sate', 'even', 'neve', 'evil', 'live', 'eviler', 'relive', 'fer', 'ref', 'fires', 'serif', 'flog', 'golf', 'flow', 'wolf', 'fool', 'loof', 'gal', 'lag', 'gals', 'slag', 'gam', 'mag', 'gan', 'nag', 'gar', 'rag', 'gas', 'sag', 'gat', 'tag', 'gats', 'stag', 'gel', 'leg', 'gelder', 'redleg', 'get', 'teg', 'gip', 'pig', 'girt', 'trig', 'gnar', 'rang', 'gnat', 'tang', 'gnats', 'stang', 'gnaws', 'swang', 'gnus', 'sung', 'got', 'tog', 'gul', 'lug', 'gulp', 'plug', 'guls', 'slug', 'gum', 'mug', 'gums', 'smug', 'guns', 'snug', 'gut', 'tug', 'habus', 'subah', 'hahs', 'shah', 'hales', 'selah', 'hap',
+                 'pah', 'hay', 'yah', 'hey', 'yeh', 'ho', 'oh', 'hoop', 'pooh', 'hop', 'poh', 'is', 'si', 'it', 'ti', 'jar', 'raj', 'kay', 'yak', 'keel', 'leek', 'keels', 'sleek', 'keep', 'peek', 'keets', 'steek', 'kips', 'spik', 'knaps', 'spank', 'knar', 'rank', 'knits', 'stink', 'lager', 'regal', 'lair', 'rial', 'lap', 'pal', 'lares', 'seral', 'larum', 'mural', 'las', 'sal', 'leer', 'reel', 'lees', 'seel', 'leets', 'steel', 'leper', 'repel', 'lever', 'revel', 'levins', 'snivel', 'liar', 'rail', 'lin', 'nil', 'lion', 'noil', 'lit', 'til', 'lobo', 'obol', 'loom', 'mool', 'loons', 'snool', 'loop', 'pool', 'loops', 'spool', 'loot', 'tool', 'looter', 'retool', 'loots', 'stool', 'lop', 'pol', 'lotos', 'sotol', 'macs', 'scam', 'maes', 'seam', 'map', 'pam', 'mar', 'ram', 'marcs', 'scram', 'mart', 'tram', 'mat', 'tam', 'maws', 'swam', 'may', 'yam', 'meet', 'teem', 'meter', 'retem', 'mho', 'ohm', 'mils', 'slim', 'mir', 'rim', 'mis', 'sim', 'mon', 'nom', 'moor', 'room', 'moot', 'toom', 'mot', 'tom', 'mures', 'serum', 'mus', 'sum', 'muts', 'stum', 'namer', 'reman', 'nap', 'pan', 'naps', 'span', 'neep', 'peen', 'net', 'ten', 'neves', 'seven', 'new', 'wen', 'nip', 'pin', 'nips', 'spin', 'nit', 'tin', 'no', 'on', 'nolos', 'solon', 'nos', 'son', 'not', 'ton', 'notes', 'seton', 'now', 'won', 'nu', 'un', 'nus', 'sun', 'nut', 'tun', 'nuts', 'stun', 'oat', 'tao', 'oohs', 'shoo', 'oot', 'too', 'os', 'so', 'ow', 'wo', 'pacer', 'recap', 'pals', 'slap', 'pans', 'snap', 'par', 'rap', 'part', 'trap', 'parts', 'strap', 'pas', 'sap', 'pat', 'tap', 'paw', 'wap', 'paws', 'swap', 'pay', 'yap', 'peels', 'sleep', 'pees', 'seep', 'per', 'rep', 'pets', 'step', 'pins', 'snip', 'pis', 'sip', 'pit', 'tip', 'pols', 'slop', 'pools', 'sloop', 'poons', 'snoop', 'port', 'trop', 'ports', 'strop', 'pot', 'top', 'pots', 'stop', 'pow', 'wop', 'pows', 'swop', 'prat', 'tarp', 'pupils', 'slipup', 'puris', 'sirup', 'pus', 'sup', 'put', 'tup', 'raps', 'spar', 'rat', 'tar', 'rats', 'star', 'raw', 'war', 'ray', 'yar', 'rebus', 'suber', 'rebut', 'tuber', 'recaps', 'spacer', 'redes', 'seder', 'redips', 'spider', 'redraw', 'warder', 'redrawer', 'rewarder', 'rees', 'seer', 'reflet', 'telfer', 'reflow', 'wolfer', 'reknit', 'tinker', 'reknits', 'stinker', 'relit', 'tiler', 'remeet', 'teemer', 'remit', 'timer', 'rennet', 'tenner', 'repins', 'sniper', 'res', 'ser', 'rot', 'tor', 'sallets', 'stellas', 'saps', 'spas', 'sat', 'tas', 'saw', 'was', 'scares', 'seracs', 'secret', 'terces', 'seeks', 'skees', 'selahs', 'shales', 'sirs', 'sris', 'sit', 'tis', 'six', 'xis', 'skeets', 'steeks', 'skips', 'spiks', 'sleeps', 'speels', 'sleets', 'steels', 'slit', 'tils', 'sloops', 'spools', 'smart', 'trams', 'smuts', 'stums', 'snaps', 'spans', 'snaw', 'wans', 'snaws', 'swans', 'snips', 'spins', 'snit', 'tins', 'snoops', 'spoons', 'snoot', 'toons', 'snot', 'tons', 'snow', 'wons', 'sow', 'wos', 'spat', 'taps', 'spay', 'yaps', 'spirt', 'trips', 'spirts', 'strips', 'spit', 'tips', 'sports', 'strops', 'spot', 'tops', 'spots', 'stops', 'sprat', 'tarps', 'sprits', 'stirps', 'staw', 'wats', 'stew', 'wets', 'stow', 'wots', 'stows', 'swots', 'straw', 'warts', 'strow', 'worts', 'struts', 'sturts', 'swat', 'taws', 'sway', 'yaws', 'swot', 'tows', 'tav', 'vat', 'taw', 'wat', 'tew', 'wet', 'tort', 'trot', 'tow', 'wot', 'trow', 'wort', 'way', 'yaw']
+    
+    if input('10.11. Display pairs list (y/n)?: ') == 'y':
+        i = 0
+        while i < len(pair_list) - 1:
+            print(pair_list[i], pair_list[i+1])
+            i += 2
+
+
+# 10.12. Two words “interlock” if taking alternating letters from each forms 
+# a new word. For example, “shoe” and “cold” interlock to form “schooled”.
+#
+#   1. Write a program that finds all pairs of words that interlock. 
+#   Hint: don’t enumerate all pairs! 
+#
+#   2. Can you find any words that are three-way interlocked; that is, 
+#   every third letter forms a word, starting from the first, second or third?
+
+
+
+
 
 
 # Run solutions
@@ -421,4 +509,5 @@ def ex10_10():
 # ex10_7()
 # ex10_8()
 # ex10_9()
-ex10_10()
+# ex10_10()
+# ex10_11()
