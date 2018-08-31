@@ -112,18 +112,34 @@ def invert_dict_orig(d):
 
 
 def invert_dict(d):
+    '''Inverts a dictionary, returning a map from val to a list of keys.
+
+    If the mapping key->val appears in d, then in the new dictionary
+    val maps to a list that includes key.
+
+    d: dict
+    
+    Returns: dict
+    '''
     inverse = dict()
     for key in d:
         val = d[key]
         inverse.setdefault(val, []).append(key)
-        # inverse[val] += [key]
     return inverse
 
-hist = histogram('parrot')
-print(hist)
+# hist = histogram('parrot')
+# print(hist)
 
-print(invert_dict(hist))
-print(invert_dict_orig(hist))
+# print(invert_dict(hist))
+# print(invert_dict_orig(hist))
+
+d = dict(a=1, b=2, c=3, z=1)
+print('d:', d)
+inverse = invert_dict(d)
+print('inverse:', inverse)
+for val in inverse:
+    keys = inverse[val]
+    print(val, keys)
 
 
 # ex11_1()
