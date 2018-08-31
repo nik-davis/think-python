@@ -116,7 +116,6 @@ def invert_dict(d):
     for key in d:
         val = d[key]
         inverse.setdefault(val, []).append(key)
-        # inverse[val] += [key]
     return inverse
 
 hist = histogram('parrot')
