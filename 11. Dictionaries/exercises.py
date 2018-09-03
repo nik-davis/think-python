@@ -329,7 +329,64 @@ def ex10_4():
     print(has_duplicates_solution(t))
 
 
+# 11.5. Two words are “rotate pairs” if you can rotate one of them and get 
+# the other. Write a program that reads a wordlist and finds all the rotate pairs.
+
+
+def rotate_letter(letter, n):
+    """Rotates a letter by n places.  Does not change other chars.
+
+    letter: single-letter string
+    n: int
+
+    Returns: single-letter string
+    """
+    if letter.isupper():
+        start = ord('A')
+    elif letter.islower():
+        start = ord('a')
+    else:
+        return letter
+
+    c = ord(letter) - start
+    i = (c + n) % 26 + start
+    return chr(i)
+
+
+def rotate_word(word, n):
+    """Rotates a word by n places.
+
+    word: string
+    n: integer
+
+    Returns: string
+    """
+    res = ''
+    for letter in word:
+        res += rotate_letter(letter, n)
+    return res
+
+
+def ex11_5():
+    '''Find all rotate pairs in word_list, save them to a dict and print'''
+    word_list = build_word_list()
+    word_list = ['zips', 'zoo']
+    
+    word_dict = build_word_dict()
+    rotate_dict = {}
+    
+    for word in word_list:
+        n = 1
+        while n < 25:
+            rotated_word = rotate_word(word, n)
+            if rotated_word in word_dict:
+                rotate_dict.setdefault(word, []).append(rotated_word)
+            n += 1
+    
+    print(rotate_dict)
+
 # ex11_1()
 # ex11_2()
 # ex11_3()
 # ex10_4()
+ex11_5()
