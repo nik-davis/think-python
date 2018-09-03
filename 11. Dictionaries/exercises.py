@@ -224,6 +224,10 @@ def ex11_2():
 known = {}
 
 def ack(m, n):
+    '''Compute Ackermann function A(m, n)
+    
+    n, m: non-negative int
+    '''
     key = str(m) + '-' + str(n)
     if key in known:
         return known[key]
@@ -238,6 +242,28 @@ def ack(m, n):
     known[key] = result
     return result
 
+
+cache = {}
+
+def ackermann_solution(m, n):
+    """Computes the Ackermann function A(m, n)
+
+    See http://en.wikipedia.org/wiki/Ackermann_function
+
+    n, m: non-negative integers
+    """
+    if m == 0:
+        return n+1
+    if n == 0:
+        return ackermann(m-1, 1)
+
+    if (m, n) in cache:
+        return cache[m, n]
+    else:
+        cache[m, n] = ackermann(m-1, ackermann(m, n-1))
+        return cache[m, n]
+
+
 def ex11_3():
     print('ack(3,4) = 125: ', ack(3, 4))
     print(ack(0,1))
@@ -246,7 +272,42 @@ def ex11_3():
     print(known)
 
 
+# 10.4. Use a dictionary to write a faster, simpler version of has_duplicates.
+
+
+def has_duplicates(t):
+    '''Returns True if any element appears more than once in a sequence.
+    (Only iterates through one loop so should be faster, but has to run sort)
+
+    t: list
+
+    returns: bool
+    '''
+    # make a copy of t to avoid modifying the parameter
+    s = t[:]
+    s.sort()
+
+    # check for adjacent elements that are equal
+    for i in range(len(s)-1):
+        if s[i] == s[i+1]:
+            return True
+    return False
+
+
+def has_duplicates(t):
+    d = {}
+    for item in t:
+        if d.get(item) == None:
+            d.setdefault(item, [])
+        else:
+            return True
+    return False
+    
+
+t = [1, 2, 3, 3]
+print(has_duplicates(t))
+
 
 # ex11_1()
 # ex11_2()
-ex11_3()
+# ex11_3()
