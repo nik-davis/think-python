@@ -125,21 +125,114 @@ def invert_dict(d):
     for key in d:
         val = d[key]
         inverse.setdefault(val, []).append(key)
+        # d.setdefault(val, []) == d['val']
     return inverse
 
-# hist = histogram('parrot')
-# print(hist)
 
-# print(invert_dict(hist))
-# print(invert_dict_orig(hist))
+def get_example():
+    '''Frequently you will see code create a variable, assign a default 
+    value to the variable, and then check a dict for a certain key. 
+    If the key exists, then the value of the key is copied into the value 
+    for the variable. 
+    
+    While there is nothing wrong this, it is more concise to use the 
+    built-in method dict.get(key[, default]) from the Python Standard 
+    Library. If the key exists in the dict, then the value for that key 
+    is returned. If it does not exist, then the default value 
+    specified as the second argument to get() is returned
+    
+    dict.get(key[, default])
+    '''
+    dictionary = {'message': 'hello world'}
 
-d = dict(a=1, b=2, c=3, z=1)
-print('d:', d)
-inverse = invert_dict(d)
-print('inverse:', inverse)
-for val in inverse:
-    keys = inverse[val]
-    print(val, keys)
+    # Verbose and inefficient method
+    #  The code below initializes a variable called data to an empty string. 
+    #  Then it checks if a certain key called message exists in a dict 
+    #  called dictionary. If the key exists, then the value of that key is 
+    #  copied into the data variable.
+    data = ''
+
+    if 'message' in dictionary:
+        data = dictionary['message']
+    
+    # Using get
+    #  When get() is called, Python checks if the specified key exists in 
+    #  the dict. If it does, then get() returns the value of that key. 
+    #  If the key does not exist, then get() returns the value specified 
+    #  in the second argument to get().
+    data = dictionary.get('message', '')
+
+    print(data)
+
+
+def setdefault_example():
+    '''When initializing a dictionary, it is common to see a code check 
+    for the existence of a key and then create the key if it does not exist. 
+    Although there is nothing wrong with this, the exact same idea can be 
+    accomplished more concisely by using the built-in dictionary method setdefault().
+    
+    dict.setdefault(key[, default])
+    '''
+    dictionary = {}
+
+    # Verbose and inefficient method:
+    #  The code below checks if a key named list exists in a dictionary 
+    #  called dictionary. If it does not exist, then the code creates the
+    #  key and then sets its value to an empty list. The code then proceeds
+    #  to append a value to the list
+    if "list" not in dictionary:
+        dictionary["list"] = []
+
+    dictionary["list"].append("list_item")
+
+    dictionary = {}
+
+    # Using setdefault:
+    #  The modified code below uses setdefault() to initialize the dictionary.
+    #  When setdefault() is called, it will check if the key already exists.
+    #  If it does exist, then setdefault() does nothing. If the key does not
+    #  exist, then setdefault() creates it and sets it to the value specified
+    #  in the second argument.
+    dictionary.setdefault("list", []).append("list_item")
+
+    print(dictionary)
+
+
+def ex11_2():
+    d = dict(a=1, b=2, c=3, z=1)
+    print('d:', d)
+    inverse = invert_dict(d)
+    print('inverse:', inverse)
+    for val in inverse:
+        keys = inverse[val]
+        print(val, keys)
+
+    hist = histogram('parrot')
+    print(hist)
+
+    print(invert_dict(hist))
+    print(invert_dict_orig(hist))
+
+    get_example()
+    setdefault_example()
+
+
+# 11.3. Memoize the Ackermann function from Exercise 6.2 and see if memoization
+# makes it possible to evaluate the function with bigger arguments. Hint: no. 
+
+
+def ack(m, n):
+    if m == 0:
+        return n + 1
+    elif m > 0 and n == 0:
+        return ack(m-1, 1)
+    elif m > 0 and n > 0:
+        return ack(m-1, ack(m, n-1))
+
+
+print('ack(3,4) = 125: ', ack(3, 4))
+
 
 
 # ex11_1()
+# ex11_2()
