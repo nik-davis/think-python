@@ -221,18 +221,32 @@ def ex11_2():
 # makes it possible to evaluate the function with bigger arguments. Hint: no. 
 
 
+known = {}
+
 def ack(m, n):
+    key = str(m) + '-' + str(n)
+    if key in known:
+        return known[key]
+
     if m == 0:
-        return n + 1
+        result = n + 1
     elif m > 0 and n == 0:
-        return ack(m-1, 1)
+        result = ack(m-1, 1)
     elif m > 0 and n > 0:
-        return ack(m-1, ack(m, n-1))
+        result =  ack(m-1, ack(m, n-1))
+    
+    known[key] = result
+    return result
 
-
-print('ack(3,4) = 125: ', ack(3, 4))
+def ex11_3():
+    print('ack(3,4) = 125: ', ack(3, 4))
+    print(ack(0,1))
+    print(ack(1,0))
+    print(ack(0,0))
+    print(known)
 
 
 
 # ex11_1()
 # ex11_2()
+ex11_3()
