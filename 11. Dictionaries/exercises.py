@@ -334,13 +334,13 @@ def ex10_4():
 
 
 def rotate_letter(letter, n):
-    """Rotates a letter by n places.  Does not change other chars.
+    '''Rotates a letter by n places.  Does not change other chars.
 
     letter: single-letter string
     n: int
 
     Returns: single-letter string
-    """
+    '''
     if letter.isupper():
         start = ord('A')
     elif letter.islower():
@@ -354,39 +354,56 @@ def rotate_letter(letter, n):
 
 
 def rotate_word(word, n):
-    """Rotates a word by n places.
+    '''Rotates a word by n places.
 
     word: string
     n: integer
 
     Returns: string
-    """
+    '''
     res = ''
     for letter in word:
         res += rotate_letter(letter, n)
     return res
 
 
-def ex11_5():
-    '''Find all rotate pairs in word_list, save them to a dict and print'''
-    word_list = build_word_list()
-    word_list = ['zips', 'zoo']
+def rotate_pairs(word_dict):
+    '''Saves all rotate pairs to a dictionary
     
-    word_dict = build_word_dict()
+    word_dict: dictionary with words as keys
+    
+    Returns: dict
+    '''
     rotate_dict = {}
-    
-    for word in word_list:
-        n = 1
-        while n < 25:
-            rotated_word = rotate_word(word, n)
+    for word in word_dict:
+        for i in range(1, 14):
+            rotated_word = rotate_word(word, i)
             if rotated_word in word_dict:
                 rotate_dict.setdefault(word, []).append(rotated_word)
-            n += 1
+                rotate_dict[word].append(i)
+
+    return rotate_dict
+
+
+def ex11_5():
+    '''Find all rotate pairs in word_dict, save them to a dict and print'''
+    word_dict = build_word_dict()
+    # word_dict = {'zips': None, 'lube': None}
+    
+    rotate_dict = rotate_pairs(word_dict)
     
     print(rotate_dict)
 
+
+# 11.6.
+
+def ex11_6():
+    print('homophone')
+
+    
 # ex11_1()
 # ex11_2()
 # ex11_3()
 # ex10_4()
-ex11_5()
+# ex11_5()
+ex11_6()
