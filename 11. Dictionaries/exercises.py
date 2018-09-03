@@ -295,19 +295,41 @@ def has_duplicates(t):
 
 
 def has_duplicates(t):
+    '''Returns true if any element appears more than once
+
+    t: list
+    '''
     d = {}
     for item in t:
-        if d.get(item) == None:
-            d.setdefault(item, [])
-        else:
+        if item in d:
             return True
+        d[item] = 1
     return False
     
 
-t = [1, 2, 3, 3]
-print(has_duplicates(t))
+def has_duplicates_solution(t):
+    """Checks whether any element appears more than once in a sequence.
+
+    Faster version using a set.
+
+    t: sequence
+    """
+    return len(set(t)) < len(t)
+
+
+def ex10_4():
+    t = [1, 2, 3]
+    print(has_duplicates(t))
+    t.append(3)
+    print(has_duplicates(t))
+
+    t = [1, 2, 3]
+    print(has_duplicates_solution(t))
+    t.append(3)
+    print(has_duplicates_solution(t))
 
 
 # ex11_1()
 # ex11_2()
 # ex11_3()
+# ex10_4()
