@@ -407,7 +407,7 @@ from pronounce import read_dictionary
 def ex11_6():
     '''Uses a lot of if statements to check for solutions to homophone puzzle
     '''
-    phonetic_d = read_dictionary('c06d.txt')
+    phonetic_d = read_dictionary()
     word_dict = build_word_dict()
     word_list = ['wrack']
     for word in word_dict:
