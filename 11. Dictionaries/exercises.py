@@ -395,12 +395,30 @@ def ex11_5():
     print(rotate_dict)
 
 
-# 11.6.
+# 11.6. But there is, however, at least one word that Dan and we know of, 
+# which will yield two homophones if you remove either of the first two 
+# letters to make two, new four-letter words. The question is, what’s the word?
+# Write a program that lists all the words that solve the Puzzler.
+
+
+from pronounce import read_dictionary
+
 
 def ex11_6():
-    print('homophone')
+    '''Uses a lot of if statements to check for solutions to homophone puzzle
+    '''
+    phonetic_d = read_dictionary('c06d.txt')
+    word_dict = build_word_dict()
+    word_list = ['wrack']
+    for word in word_dict:
+        word1 = word[1:]
+        word2 = word[0] + word[2:]
+        if word1 in word_dict and word2 in word_dict:
+            if word in phonetic_d and word1 in phonetic_d and word2 in phonetic_d:
+                if phonetic_d[word] == phonetic_d[word1] == phonetic_d[word2]:
+                    print(word, word1, word2)
 
-    
+
 # ex11_1()
 # ex11_2()
 # ex11_3()
