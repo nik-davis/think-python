@@ -7,31 +7,55 @@
 # different languages and see how letter frequency varies between languages.
 
 def most_frequent(s):
-    s = s.replace(' ', '')
-    
-    t = tuple(s)
-    print(t)
-    d = {}
-    for item in t:
-        d.setdefault(item, 0)
-        d[item] += 1 
-    print(d)
-    
-    
+    '''Takes a string and prints the letters in decreasing order of frequency.
+    Includes rudimentary special character handling.
+
+    s: String
+
+    returns: None
+    '''
+    chars = ' -”“!?‘’,.;:\\\n\'«»'
+    for symbol in chars:
+        if symbol in s:
+            s = s.replace(symbol, '')
+    s = s.lower()
+
     d = {}
     for letter in s:
         d.setdefault(letter, 0)
         d[letter] += 1
-    print(d)
-    t = d.items()
-    for letter, number in t:
-        print(letter, number)
     
+    if len(d) > 26:
+        print(' More than 26 characters counted')
 
-string = 'ab  cd dda'
-most_frequent(string)
-# print(string)
+    t = []
+    for key, value in d.items():
+        t.append((value, key))
+    t = sorted(t, reverse=True)
+    
+    for freq, letter in t:
+        print('  {0}: {1}'.format(letter, freq))
+    
+def ex12_1():
+    print('Basic String:')
+    string = 'ab  cd dda'
+    most_frequent(string)
 
+    print('The Golden Bird:')
+    fin = open('goldenbird.txt', encoding='UTF-8')
+    s = ''
+    for line in fin:
+        s += line
+
+    most_frequent(s)
+
+    print('Wolves against Mustangs (Czech)')
+    fin = open('czech.txt', encoding='UTF-8')
+    s = ''
+    for line in fin:
+        s += line
+
+    most_frequent(s)
 
 # 12.2. a) Write a program that reads a word list from a file and prints
 # all the sets of words that are anagrams.
@@ -102,3 +126,5 @@ most_frequent(string)
 
 
 
+# Run exercise solutions
+ex12_1()
