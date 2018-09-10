@@ -79,6 +79,27 @@ def ex12_1():
 # along with a letter on the board, to form an eight-letter word. What 
 # collection of 8 letters forms the most possible bingos? Hint: there are seven.
 
+def build_word_list():
+    fin = open('words.txt')
+    word_list = []
+    for line in fin:
+        word = line.strip()
+        word_list.append(word)
+    return word_list
+
+# word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
+word_list = build_word_list()
+
+d = dict()
+for word in word_list:
+    t = tuple(sorted(word))
+    d.setdefault(t, []).append(word)
+
+for k in d:
+    if len(d[k]) > 1:
+        print(d[k])
+    
+
 
 
 
@@ -127,4 +148,4 @@ def ex12_1():
 
 
 # Run exercise solutions
-ex12_1()
+# ex12_1()
