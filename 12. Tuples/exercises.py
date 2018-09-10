@@ -79,7 +79,12 @@ def ex12_1():
 # along with a letter on the board, to form an eight-letter word. What 
 # collection of 8 letters forms the most possible bingos? Hint: there are seven.
 
+
 def build_word_list():
+    '''Build word list from file words.txt
+
+    Returns: list of strings
+    '''
     fin = open('words.txt')
     word_list = []
     for line in fin:
@@ -87,20 +92,25 @@ def build_word_list():
         word_list.append(word)
     return word_list
 
-# word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
-word_list = build_word_list()
 
-d = dict()
-for word in word_list:
-    t = tuple(sorted(word))
-    d.setdefault(t, []).append(word)
+def print_anagrams(word_list):
+    '''Reads word list and prints all sets of words that are anagrams
 
-for k in d:
-    if len(d[k]) > 1:
-        print(d[k])
+    word_list: list of strings
+    '''
+    d = dict()
+    for word in word_list:
+        t = tuple(sorted(word))
+        d.setdefault(t, []).append(word)
+
+    for k in d:
+        if len(d[k]) > 1:
+            print(d[k])
     
 
-
+# word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
+word_list = build_word_list()
+print_anagrams(word_list)
 
 
 
