@@ -93,11 +93,12 @@ def build_word_list():
     return word_list
 
 
-def print_anagrams(word_list):
+def print_anagrams(word_list, n=2):
     '''Reads word list and prints all sets of words that are anagrams from
     longest set to shortest
 
     word_list: list of strings
+    n: minimum number of words that form anagrams (Default: 2)
     '''
     # Create dictionary with tuple of each word as key and anagrams as values
     d = dict()
@@ -114,7 +115,7 @@ def print_anagrams(word_list):
         if len(d[k]) == 7 and len(k) == 8:
             bingo = k
             bingo_words = d[k]
-        if len(d[k]) > 1:
+        if len(d[k]) >= n:
             anagram_dict[tuple(d[k])] = len(d[k])
     
     # Reverse the dictionary so length is first and save to a list, sorting
@@ -135,7 +136,7 @@ def print_anagrams(word_list):
 def ex12_2():
     # word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
     word_list = build_word_list()
-    print_anagrams(word_list)
+    print_anagrams(word_list, 6)
 
 
 
