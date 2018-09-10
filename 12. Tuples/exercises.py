@@ -108,7 +108,12 @@ def print_anagrams(word_list):
     # Create a new dict with tuple of anagram words as keys and length 
     # (amount of words) as values
     anagram_dict = dict()
+    
     for k in d:
+        # Find bingo solution. 8 letters giving 7 words
+        if len(d[k]) == 7 and len(k) == 8:
+            bingo = k
+            bingo_words = d[k]
         if len(d[k]) > 1:
             anagram_dict[tuple(d[k])] = len(d[k])
     
@@ -122,11 +127,15 @@ def print_anagrams(word_list):
     # Print the words as a list, longest first
     for length, words in anagram_list:
         print(list(words))
+
+    print('Collection of letters with most bingos:', bingo)
+    print('Possible words:', bingo_words)
     
 
-# word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
-word_list = build_word_list()
-print_anagrams(word_list)
+def ex12_2():
+    # word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
+    word_list = build_word_list()
+    print_anagrams(word_list)
 
 
 
@@ -175,3 +184,4 @@ print_anagrams(word_list)
 
 # Run exercise solutions
 # ex12_1()
+ex12_2()
