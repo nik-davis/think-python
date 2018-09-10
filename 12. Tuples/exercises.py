@@ -94,18 +94,34 @@ def build_word_list():
 
 
 def print_anagrams(word_list):
-    '''Reads word list and prints all sets of words that are anagrams
+    '''Reads word list and prints all sets of words that are anagrams from
+    longest set to shortest
 
     word_list: list of strings
     '''
+    # Create dictionary with tuple of each word as key and anagrams as values
     d = dict()
     for word in word_list:
         t = tuple(sorted(word))
         d.setdefault(t, []).append(word)
 
+    # Create a new dict with tuple of anagram words as keys and length 
+    # (amount of words) as values
+    anagram_dict = dict()
     for k in d:
         if len(d[k]) > 1:
-            print(d[k])
+            anagram_dict[tuple(d[k])] = len(d[k])
+    
+    # Reverse the dictionary so length is first and save to a list, sorting
+    # by number of words in list
+    anagram_list = []
+    for key, value in anagram_dict.items():
+        anagram_list.append((value, key))    
+    anagram_list = sorted(anagram_list, reverse = True)
+
+    # Print the words as a list, longest first
+    for length, words in anagram_list:
+        print(list(words))
     
 
 # word_list = ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
