@@ -20,14 +20,49 @@ def histogram_concise(s):
         d[c] = d.get(c, 0)
         output = d.get(c, 0)
         d[c] += 1
-        print(c + ':', output, '->', d.get(c, 0))
+        print('', c + ':', output, '->', d.get(c, 0))
     return d
 
-h = histogram_concise('brontosaurus')
-print('histogram h =', h)
 
-for c in h:
-    print(c, h[c])
+print('Histogram using get:')
+h = histogram_concise('brontosaurus')
+print(' histogram h =', h)
+
+
+def print_hist(h):
+    '''Using a dictionary in a for statement traverses the keys of the dictionary,
+    but in no particular order.
+
+    Prints each key and corresponding value.
+    '''
+    for c in h:
+        print('', c, h[c])
+
+
+print('print_hist:')
+print_hist(h)
+
+
+def print_sorted_hist(h):
+    '''Can use sorted function to traverse keys in sorted order.
+    '''
+    for key in sorted(h):
+        print('', key, h[key])
+
+
+print('Sorted histogram:')
+print_sorted_hist(h)
+
+
+def reverse_loopkup(d, v):
+    '''Takes a value and returns the first key that maps to that value.
+    Will be slow to use often.
+    '''
+    for k in d:
+        if d[k] == v:
+            return k
+    raise LookupError()
+
 
 def invert_dict(d):
     '''Invert a dictionary, from key:values to values:key'''
@@ -35,15 +70,20 @@ def invert_dict(d):
     for key in d:
         val = d[key]
         if val not in inverse:
-            print('here:', key, [key])
+            print(' val not in inverse:', key, [key])
             inverse[val] = [key]
-            print('new key', inverse)
+            print(' new key', inverse)
         else:
             inverse[val].append(key)
-            print('add to key', inverse)
+            print(' add to key', inverse)
     return inverse
 
+
 hist = histogram('parrot')
-print(hist)
+print('Parrot histogram:', hist)
 inverse = invert_dict(hist)
-print(inverse)
+print('Parrot inverse:', inverse)
+
+# Print key and value from highest to lowest frequency
+for key in sorted(inverse, reverse=True):
+    print(key, inverse[key])
