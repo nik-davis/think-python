@@ -9,6 +9,20 @@
 # different languages and see how letter frequency varies between languages.
 
 
+def handle_text(s):
+    '''Text handling: removes symbols from a string and sets to lower-case
+    
+    s: string
+
+    returns: string
+    '''
+    symbols = ' -”“!?‘’,.;:\\\n\'«»'
+    for symbol in symbols:
+        if symbol in s:
+            s = s.replace(symbol, '')
+    s = s.lower()
+    return s
+
 def histogram(s):
     '''Takes a string and returns histogram of frequencies
     
@@ -31,12 +45,7 @@ def most_frequent(s):
 
     returns: None
     '''
-    chars = ' -”“!?‘’,.;:\\\n\'«»'
-    for symbol in chars:
-        if symbol in s:
-            s = s.replace(symbol, '')
-    s = s.lower()
-
+    s = handle_text(s)
     d = histogram(s)
     
     if len(d) > 26:
