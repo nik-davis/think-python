@@ -8,6 +8,21 @@
 # the letters in decreasing order of frequency. Find text samples from several
 # different languages and see how letter frequency varies between languages.
 
+
+def histogram(s):
+    '''Takes a string and returns histogram of frequencies
+    
+    s: String
+
+    returns: dictionary mapping letter:frequency
+    '''
+    d = dict()
+    for c in s:
+        d[c] = d.get(c, 0)
+        d[c] += 1
+    return d    
+
+
 def most_frequent(s):
     '''Takes a string and prints the letters in decreasing order of frequency.
     Includes rudimentary special character handling.
@@ -22,10 +37,7 @@ def most_frequent(s):
             s = s.replace(symbol, '')
     s = s.lower()
 
-    d = {}
-    for letter in s:
-        d.setdefault(letter, 0)
-        d[letter] += 1
+    d = histogram(s)
     
     if len(d) > 26:
         print(' More than 26 characters counted')
@@ -186,5 +198,5 @@ def ex12_2():
 
 
 # Run exercise solutions
-# ex12_1()
-ex12_2()
+ex12_1()
+# ex12_2()
