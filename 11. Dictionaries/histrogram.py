@@ -79,6 +79,16 @@ def invert_dict(d):
     return inverse
 
 
+def invert_dict_setdefault(d):
+    '''Taken from exercises; inverst a dictionary using setdefault method
+    '''
+    inverse = dict()
+    for key in d:
+        val = d[key]
+        inverse.setdefault(val, []).append(key)
+    return inverse
+
+
 hist = histogram('parrot')
 print('Parrot histogram:', hist)
 inverse = invert_dict(hist)
