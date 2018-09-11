@@ -23,6 +23,7 @@ def handle_text(s):
     s = s.lower()
     return s
 
+
 def histogram(s):
     '''Takes a string and returns histogram of frequencies
     
@@ -51,14 +52,20 @@ def most_frequent(s):
     if len(d) > 26:
         print(' More than 26 characters counted')
 
+    # Reverse dictionary and store as a list of tuples where first value is
+    # frequency and second is letter
     t = []
-    for key, value in d.items():
-        t.append((value, key))
+    for letter, freq in d.items():
+        t.append((freq, letter))
+
+    # Sort tuples in list from highest to lowest frequency
     t = sorted(t, reverse=True)
     
+    # Unpack tuples, printing letter then frequency
     for freq, letter in t:
         print('  {0}: {1}'.format(letter, freq))
     
+
 def ex12_1():
     print('Basic String:')
     string = 'ab  cd dda'
@@ -79,6 +86,7 @@ def ex12_1():
         s += line
 
     most_frequent(s)
+
 
 # 12.2. a) Write a program that reads a word list from a file and prints
 # all the sets of words that are anagrams.
