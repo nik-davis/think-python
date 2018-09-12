@@ -213,11 +213,6 @@ def is_metathesis(word1, word2):
     return True
 
 
-print('Original method using is_metathesis:',
-      is_metathesis('converse', 'conserve'))
-print()
-
-
 def build_metathesis_dict():
     '''Build a dictionary of metathesis pairs. Uses length of words as keys
     and saves solutions as tuples within a list.
@@ -242,7 +237,11 @@ def build_metathesis_dict():
 
 
 def ex12_3():
-    '''Run solution to metathesis pair exercise'''
+    '''Run solution to metathesis pair exercise
+    '''
+    print('Original method using is_metathesis:',
+        is_metathesis('converse', 'conserve'))
+    print()
 
     meta_dict = build_metathesis_dict()
 
@@ -270,7 +269,6 @@ def ex12_3():
             print("Error: Please type int\n")
 
 
-ex12_3()
 
 # 12.4. What is the longest English word, that remains a valid English word,
 # as you remove its letters one at a time? Now, letters can be removed from
@@ -300,6 +298,78 @@ ex12_3()
 #       the words that are known to be reducible.
 
 
+def build_word_dict():
+    fin = open('resources/words.txt')
+    word_dict = dict()
+    for line in fin:
+        word = line.strip()
+        word_dict.setdefault(word, 0)
+    return word_dict
+
+word_dict = build_word_dict()
+
+# Can remove all words not containing a or i
+temp_word_dict = dict()
+for key in word_dict:
+    if 'a' in key or 'i' in key:
+        temp_word_dict.setdefault(key, 0)
+word_dict = temp_word_dict
+
+
+def get_children(word):
+    # Find children of a word
+    children = list()
+
+    for i in range(len(word)):
+        child = word[:i] + word[i+1:]
+        # print(child)
+        children.append(child)
+    # print(children)
+    return children
+
+
+def check_children(children):
+    
+    # Check base case
+    for child in children:
+        if child == '':
+            return True
+    return False
+
+
+def validate_word(word):
+    # Check if a word is real
+    return word in word_dict
+
+
+def validate_word_list(word_list):
+    # Check if words in a list are real and remove those which aren't
+    validated = []
+    for word in word_list:
+        if validate_word(word):
+            validated.append(word)
+    return validated
+
+
+def check_word(word):
+    # Recusion calls and word checking
+    if check_children(word):
+        return True
+    if type(word) == str:
+        children = get_children(word)
+        children = validate_word(children)
+        return check_word(children)
+    if type(word) == list:
+        for w in word:
+            children = get_children(w)
+            children = validate_word_list(children)
+            return check_word(children)
+    return False
+    
+word = 'sprite'
+print(check_word(word))
+
 # Run exercise solutions
 # ex12_1()
 # ex12_2()
+# ex12_3()
