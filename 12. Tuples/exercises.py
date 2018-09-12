@@ -177,6 +177,11 @@ def ex12_2():
 
 
 def build_word_dict():
+    '''Build a dictionary of words with word length as keys and list of words as
+    values.
+
+    returns: dictionary of int:list of strings
+    '''
     fin = open('resources/words.txt')
 
     word_dict = dict()
@@ -214,7 +219,11 @@ print()
 
 
 def build_metathesis_dict():
+    '''Build a dictionary of metathesis pairs. Uses length of words as keys
+    and saves solutions as tuples within a list.
 
+    returns: dictionary of int:list of tuple of strings
+    '''
     metadict_all = dict()
     metathesis_dict = dict()
     word_dict = build_word_dict()
@@ -233,6 +242,7 @@ def build_metathesis_dict():
 
 
 def ex12_3():
+    '''Run solution to metathesis pair exercise'''
 
     meta_dict = build_metathesis_dict()
 
