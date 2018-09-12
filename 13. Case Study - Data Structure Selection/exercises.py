@@ -17,11 +17,25 @@
 import string
 
 
-def open_file(filename):
-    return open(filename, encoding='UTF-8').read()
+def open_file(filename, encoding='UTF-8'):
+    '''Reads a file and returns as string.
+
+    filename: path of file
+    encoding: Optional: encoding to use (default UTF-8)
+
+    returns: string
+    '''
+    return open(filename, encoding=encoding).read()
     
 
 def get_words(filename):
+    '''Returns a lower-cased list of words from a given file with
+    punctuation and whitespace removed
+
+    filename: path of file to read
+
+    returns: list of strings
+    '''
     s = open_file(filename)
 
     t = s.split()
@@ -34,8 +48,12 @@ def get_words(filename):
 
 
 def ex13_1():
+    '''Run ex 13.1 solution'''
     t = get_words('resources/goldenbird.txt')
-    print(t)
+    
+    # Uncomment to print word list:
+    # print(t)
 
 
+# Run solutions
 ex13_1()
