@@ -176,6 +176,18 @@ def ex12_2():
 # Hint: don’t test all pairs of words, and don’t test all possible swaps.
 
 
+def build_word_dict():
+    fin = open('resources/words.txt')
+
+    word_dict = dict()
+    for line in fin:
+        word = line.strip()
+        i = len(word)
+        word_dict.setdefault(i, []).append(word)
+    
+    return word_dict
+
+
 def is_metathesis(word1, word2):
     '''Compares two words and returns True if they are a 'metathesis pair'
     (If can transform one into the other by swapping two letters)
@@ -200,13 +212,26 @@ print(is_metathesis('converse', 'conserve'))
 
 metathesis_dict = dict()
 
-word_list = build_word_list()
-for word1 in word_list[:10000]:
-    if word1 not in metathesis_dict:
-        for word2 in word_list[:10000]:
-            if word2 not in metathesis_dict:
-                if is_metathesis(word1, word2):
-                    metathesis_dict.setdefault(word1, []).append(word2)
+word_dict = build_word_dict()
+for i in word_dict:
+# for i in range(5,6):    
+    print(i, len(word_dict[i]))
+    word_list = word_dict[i]
+    for word1 in word_list:
+        if word1 not in metathesis_dict:
+            for word2 in word_list:
+                if word2 not in metathesis_dict:
+                    if is_metathesis(word1, word2):
+                        metathesis_dict.setdefault(word1, []).append(word2)
+    print(metathesis_dict)
+
+# word_list = build_word_list()
+# for word1 in word_list[:10]:
+#     if word1 not in metathesis_dict:
+#         for word2 in word_list[:10]:
+#             if word2 not in metathesis_dict:
+#                 if is_metathesis(word1, word2):
+#                     metathesis_dict.setdefault(word1, []).append(word2)
 
 print(metathesis_dict)
 # print(word_list[:20])
