@@ -27,8 +27,6 @@ t = s.split()
 
 for i in range(len(t)):
     t[i] = t[i].lower()
-    for punctuation in string.punctuation:
-        if punctuation in t[i]:
-            t[i] = t[i].replace(punctuation, '')
+    t[i] = t[i].strip(string.punctuation)
 
 print(t)
