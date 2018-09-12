@@ -215,5 +215,5 @@ def ex12_2():
 
 
 # Run exercise solutions
-ex12_1()
-# ex12_2()
+# ex12_1()
+ex12_2()
