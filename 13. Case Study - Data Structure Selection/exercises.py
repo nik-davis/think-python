@@ -16,17 +16,26 @@
 
 import string
 
+
 def open_file(filename):
     return open(filename, encoding='UTF-8').read()
     
-s = open_file('12. Tuples/goldenbird.txt')
 
-s = s[:400]
+def get_words(filename):
+    s = open_file(filename)
 
-t = s.split()
+    t = s.split()
 
-for i in range(len(t)):
-    t[i] = t[i].lower()
-    t[i] = t[i].strip(string.punctuation)
+    for i in range(len(t)):
+        t[i] = t[i].lower()
+        t[i] = t[i].strip(string.punctuation)
 
-print(t)
+    return t
+
+
+def ex13_1():
+    t = get_words('resources/goldenbird.txt')
+    print(t)
+
+
+ex13_1()
