@@ -243,8 +243,7 @@ def ex12_3():
                 break
             elif int(inp) in keys_list:
                 for t in meta_dict[int(inp)]:
-                    print(t)
-                break   
+                    print(t) 
             else:
                 print("Error: Key doesn't exist, try a different number\n")
         except:
