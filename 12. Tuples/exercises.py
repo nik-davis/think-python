@@ -72,7 +72,7 @@ def ex12_1():
     most_frequent(string)
 
     print('The Golden Bird:')
-    fin = open('goldenbird.txt', encoding='UTF-8')
+    fin = open('resources/goldenbird.txt', encoding='UTF-8')
     s = ''
     for line in fin:
         s += line
@@ -80,7 +80,7 @@ def ex12_1():
     most_frequent(s)
 
     print('Wolves against Mustangs (Czech)')
-    fin = open('czech.txt', encoding='UTF-8')
+    fin = open('resources/czech.txt', encoding='UTF-8')
     s = ''
     for line in fin:
         s += line
@@ -116,7 +116,7 @@ def build_word_list():
 
     Returns: list of strings
     '''
-    fin = open('words.txt')
+    fin = open('resources/words.txt')
     word_list = []
     for line in fin:
         word = line.strip()
@@ -170,8 +170,6 @@ def ex12_2():
     print_anagrams(word_list, 6)
 
 
-
-
 # 12.3. Two words form a “metathesis pair” if you can transform one into the 
 # other by swapping two letters; for example, “converse” and “conserve”. 
 # Write a program that finds all of the metathesis pairs in the dictionary.
@@ -216,4 +214,4 @@ def ex12_2():
 
 # Run exercise solutions
 # ex12_1()
-ex12_2()
+# ex12_2()
