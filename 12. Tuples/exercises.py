@@ -209,32 +209,48 @@ def is_metathesis(word1, word2):
 
 print(is_metathesis('converse', 'conserve'))
 
+def build_metathesis_dict():
 
-metathesis_dict = dict()
+    metadict_all = dict()
+    metathesis_dict = dict()
+    word_dict = build_word_dict()
 
-word_dict = build_word_dict()
-for i in word_dict:
-# for i in range(5,6):    
-    print(i, len(word_dict[i]))
-    word_list = word_dict[i]
-    for word1 in word_list:
-        if word1 not in metathesis_dict:
-            for word2 in word_list:
-                if word2 not in metathesis_dict:
-                    if is_metathesis(word1, word2):
-                        metathesis_dict.setdefault(word1, []).append(word2)
-    print(metathesis_dict)
+    for i in word_dict:
+        for word1 in word_dict[i]:
+            word1_tuple = tuple(sorted(tuple(word1)))
+            metadict_all.setdefault(word1_tuple, []).append(word1)
 
-# word_list = build_word_list()
-# for word1 in word_list[:10]:
-#     if word1 not in metathesis_dict:
-#         for word2 in word_list[:10]:
-#             if word2 not in metathesis_dict:
-#                 if is_metathesis(word1, word2):
-#                     metathesis_dict.setdefault(word1, []).append(word2)
+    for t in metadict_all:
+        if len(metadict_all[t]) > 1:
+            key = len(metadict_all[t][0])
+            metathesis_dict.setdefault(key, []).append(tuple(metadict_all[t]))
 
-print(metathesis_dict)
-# print(word_list[:20])
+    return metathesis_dict
+
+
+def ex12_3():
+
+    meta_dict = build_metathesis_dict()
+
+    keys_list = []
+    for key, value in meta_dict.items():
+            keys_list.append(key)
+
+    while True:
+        inp = input('Display metathesis pairs of which length?\n Possible lengths are: {0}\n (Type "quit" to exit)\n > '.format(keys_list))
+        try:
+            if inp == 'quit':
+                break
+            elif int(inp) in keys_list:
+                for t in meta_dict[int(inp)]:
+                    print(t)
+                break   
+            else:
+                print("Error: Key doesn't exist, try a different number\n")
+        except:
+                print("Error: Please type int\n")
+
+ex12_3()
 
 # 12.4. What is the longest English word, that remains a valid English word, 
 # as you remove its letters one at a time? Now, letters can be removed from 
