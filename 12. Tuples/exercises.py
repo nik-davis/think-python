@@ -176,11 +176,40 @@ def ex12_2():
 # Hint: don’t test all pairs of words, and don’t test all possible swaps.
 
 
+def is_metathesis(word1, word2):
+    '''Compares two words and returns True if they are a 'metathesis pair'
+    (If can transform one into the other by swapping two letters)
+
+    word1, word2: string
+
+    returns: bool
+    '''
+    # Skip same word and words not of same length
+    if word1 == word2 or len(word1) != len(word2):
+        return False
+
+    # Only proceed with words containing exact same set of letters
+    if sorted(tuple(word1)) != sorted(tuple(word2)):
+        return False
+
+    # If passes preconditions, must be metathesis pair
+    return True
+
+print(is_metathesis('converse', 'conserve'))
 
 
+metathesis_dict = dict()
 
+word_list = build_word_list()
+for word1 in word_list[:10000]:
+    if word1 not in metathesis_dict:
+        for word2 in word_list[:10000]:
+            if word2 not in metathesis_dict:
+                if is_metathesis(word1, word2):
+                    metathesis_dict.setdefault(word1, []).append(word2)
 
-
+print(metathesis_dict)
+# print(word_list[:20])
 
 # 12.4. What is the longest English word, that remains a valid English word, 
 # as you remove its letters one at a time? Now, letters can be removed from 
