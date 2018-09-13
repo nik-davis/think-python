@@ -69,30 +69,15 @@ def ex13_1():
 # the most extensive vocabulary?
 
 
-def get_words(filename):
-    '''Returns a lower-cased list of words from a given file with
-    punctuation and whitespace removed
+def read_book(filename):
+    '''Reads book from file, removing header and footer (works for poroject
+    gutenberg format books)
 
-    filename: path of file to read
+    filename: string
 
-    returns: list of strings
+    returns: string
     '''
-    s = open_file(filename)
-    
-    t = s.split()
-
-    for i in range(len(t)):
-        t[i] = t[i].lower()
-        t[i] = t[i].strip(string.punctuation)
-
-    return t
-
-
-def ex13_2():
-    '''Run ex 13.2 solution'''
-
-    t = get_words('resources/grimm.txt')
-    f = open('resources/grimm.txt', encoding='UTF-8').readlines()
+    f = open(filename, encoding='UTF-8').readlines()
     s = str()
 
     write = False
@@ -106,7 +91,33 @@ def ex13_2():
         if line[:12] == '*** START OF':
             write = True
 
-    print(s)
+    return s
+
+def get_words(s):
+    '''Returns a lower-cased list of words from a string with
+    punctuation and whitespace removed
+
+    s: string
+
+    returns: list of strings
+    '''
+    t = s.split()
+
+    for i in range(len(t)):
+        t[i] = t[i].lower()
+        t[i] = t[i].strip(string.punctuation)
+
+    return t
+
+
+def ex13_2():
+    '''Run ex 13.2 solution'''
+    
+    s = read_book('resources/grimm.txt')
+    t = get_words(s)
+    print(type(s), type(t))
+    
+    
     
         
 
