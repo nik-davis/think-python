@@ -124,11 +124,17 @@ def count_words(t):
         d[word] += 1
     return d
 
-def ex13_2():
-    '''Run ex 13.2 solution'''
 
-    book_name = 'Grimm'
-    s = read_book('resources/grimm.txt')
+def count_book(bookname, filename):
+    '''Count and print total number of words, and number of different words
+    in a given book, supplied in txt format
+    
+    bookname: string
+    filename: string
+
+    returns: None
+    '''
+    s = read_book(filename)
     t = get_words(s)
 
     d = count_words(t)
@@ -136,8 +142,16 @@ def ex13_2():
     total_words = len(t)
     words_used = len(d)
 
-    print('Total number of words in {0}: {1}'.format(book_name, total_words))
+    print('Total number of words in {0}: {1}'.format(bookname, total_words))
     print('Number of different words used:', words_used)
+    print()
+
+def ex13_2():
+    '''Run ex 13.2 solution'''
+
+    count_book('Grimm', 'resources/grimm.txt')
+    count_book('Beowulf', 'resources/beowulf.txt')
+    count_book('Frankenstein', 'resources/frankenstein.txt')
 
 
 # Run solutions
