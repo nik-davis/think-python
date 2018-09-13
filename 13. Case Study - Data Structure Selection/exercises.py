@@ -132,7 +132,7 @@ def count_book(bookname, filename):
     bookname: string
     filename: string
 
-    returns: None
+    returns: dict of word:frequency
     '''
     s = read_book(filename)
     t = get_words(s)
@@ -146,15 +146,47 @@ def count_book(bookname, filename):
     print('Number of different words used:', words_used)
     print()
 
+    return d
+
 def ex13_2():
     '''Run ex 13.2 solution'''
+    
+    global grimm
+    grimm = count_book('Grimm', 'resources/grimm.txt')
+    beowulf = count_book('Beowulf', 'resources/beowulf.txt')
+    frankenstein = count_book('Frankenstein', 'resources/frankenstein.txt')
 
-    count_book('Grimm', 'resources/grimm.txt')
-    count_book('Beowulf', 'resources/beowulf.txt')
-    count_book('Frankenstein', 'resources/frankenstein.txt')
+
+# 13.3. Modify the program from the previous exercise to print the 20 most 
+# frequently used words in the book. 
+
+
+def invert_dict(d):
+    '''Invert a dictionary, mapping old keys to a list of values where 
+    new keys are the old values.
+
+    d: dict of key:value
+
+    returns: dict of value:key
+    '''
+    inverse = dict()
+    for key in d:
+        inverse.setdefault(d[key], []).append(key)
+    return inverse
+
+def ex13_3():
+    '''Run solution to ex 13.3.'''
+    # Invert grimm histogram
+    inverted_dict = invert_dict(grimm)
+    # Retrieve sorted list of keys, i.e. most to least frequent indices
+    sorted_inverted_list = sorted(invert_dict(grimm), reverse=True)
+    
+    # Using the top twenty frequencies (also indices), print out the word
+    for key in sorted_inverted_list[:20]:
+        print('{0}: {1}'.format(key, inverted_dict[key]))
 
 
 # Run solutions
 # ex13_1()
 ex13_2()
-
+ex13_3()
