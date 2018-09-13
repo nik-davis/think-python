@@ -103,8 +103,17 @@ def get_words(s):
     '''
     t = s.split()
 
+    temp_list = list()
+    for word in t:
+        if '--' in word:
+            for word in word.split('--'):
+                temp_list.append(word)
+        else:
+            temp_list.append(word)
+    t = temp_list
+
     punctuation = string.punctuation + '‘’“”'
-    print(punctuation)
+
     for i in range(len(t)):
         t[i] = t[i].lower()
         t[i] = t[i].strip(punctuation)
