@@ -103,9 +103,11 @@ def get_words(s):
     '''
     t = s.split()
 
+    punctuation = string.punctuation + '‘’“”'
+    print(punctuation)
     for i in range(len(t)):
         t[i] = t[i].lower()
-        t[i] = t[i].strip(string.punctuation)
+        t[i] = t[i].strip(punctuation)
 
     return t
 
