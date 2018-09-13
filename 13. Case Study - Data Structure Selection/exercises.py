@@ -110,19 +110,35 @@ def get_words(s):
     return t
 
 
+def count_words(t):
+    '''Count number of times a word appears in a list, storing as values
+    in a dictionary.
+
+    t: list
+
+    returns: dict of word:frequency
+    '''
+    d = dict()
+    for word in t:
+        d[word] = d.get(word, 0)
+        d[word] += 1
+    return d
+
 def ex13_2():
     '''Run ex 13.2 solution'''
-    
+
+    book_name = 'Grimm'
     s = read_book('resources/grimm.txt')
     t = get_words(s)
-    print(type(s), type(t))
-    
-    
-    
-        
 
-    # Uncomment to print word list:
-    # print(t)
+    d = count_words(t)
+
+    total_words = len(t)
+    words_used = len(d)
+
+    print('Total number of words in {0}: {1}'.format(book_name, total_words))
+    print('Number of different words used:', words_used)
+
 
 # Run solutions
 # ex13_1()
