@@ -299,6 +299,10 @@ def ex12_3():
 
 
 def build_word_dict():
+    '''Generate word dictionary with strings as keys
+
+    returns: dict with str as keys
+    '''
     fin = open('resources/words.txt')
     word_dict = dict()
     for line in fin:
@@ -306,18 +310,28 @@ def build_word_dict():
         word_dict.setdefault(word, 0)
     return word_dict
 
-word_dict = build_word_dict()
 
-# Can remove all words not containing a or i
-temp_word_dict = dict()
-for key in word_dict:
-    if 'a' in key or 'i' in key:
-        temp_word_dict.setdefault(key, 0)
-word_dict = temp_word_dict
+def trim_word_dict(word_dict):
+    '''For reducible testing, removes all words not containing a or i
+    
+    word_dict: dict with strings as keys
+
+    returns: dict with strings as keys
+    '''
+    temp_word_dict = dict()
+    for key in word_dict:
+        if 'a' in key or 'i' in key:
+            temp_word_dict.setdefault(key, 0)
+    return temp_word_dict
 
 
 def get_children(word):
-    # Find children of a word
+    '''Generate a list of "reduced" children from a word.
+    
+    word: string
+
+    returns: list    
+    '''
     children = list()
 
     for i in range(len(word)):
@@ -328,48 +342,83 @@ def get_children(word):
     return children
 
 
-def check_children(children):
-    
-    # Check base case
-    for child in children:
-        if child == '':
-            return True
-    return False
-
-
 def validate_word(word):
-    # Check if a word is real
+    '''Check if a word is real.
+    
+    word: string
+
+    returns: bool
+    '''
     return word in word_dict
 
 
-def validate_word_list(word_list):
-    # Check if words in a list are real and remove those which aren't
-    validated = []
-    for word in word_list:
-        if validate_word(word):
-            validated.append(word)
-    return validated
-
-
-def check_word(word):
-    # Recusion calls and word checking
-    if check_children(word):
-        return True
-    if type(word) == str:
-        children = get_children(word)
-        children = validate_word(children)
-        return check_word(children)
-    if type(word) == list:
-        for w in word:
-            children = get_children(w)
-            children = validate_word_list(children)
-            return check_word(children)
-    return False
+def check_word(word, verbose=False):
+    '''Recursively check if a word and all children are reducible. Optional
+    logging to show steps
     
-word = 'sprite'
-print(check_word(word))
+    word: string
+    verbose: bool
+    
+    returns: bool
+    '''
+    # Recusion calls and word checking
+    
+    # Base case. Reduces down to empty string
+    if word == '':
+        return True
+
+    children = get_children(word)
+    if verbose == True:
+        print('  Children:', children)
+    for child in children:
+        if child == '':
+            return True
+        if validate_word(child):
+            if verbose == True:
+                print('  Valid child:', child)
+                return check_word(child, verbose=True)
+            else:
+                return check_word(child)
+    return False
+
+    
+def ex12_4():
+
+    # Build word dict and trim words without i or a. Use global so don't
+    # have to pass word_dict to all functions
+    global word_dict
+    word_dict = build_word_dict()
+    word_dict = trim_word_dict(word_dict)
+
+    # Run basic tests
+    print('Empty string, True:', check_word(''))
+    print('Sprite, True:', check_word('sprite'))
+    print('Assvogel, False:', check_word('assvogel'))
+
+    # Find reducible all words
+    reducible_dict = dict()
+    for word in word_dict:
+        if check_word(word):
+            reducible_dict[word] = 0
+
+    # Find longest reducible word or words
+    longest_so_far = str()
+    longest_list = list()
+    for word in reducible_dict:
+        if len(word) > len(longest_so_far):
+            longest_so_far = word
+            longest_list = [word]
+        elif len(word) == len(longest_so_far):
+            longest_list.append(word)
+
+    # Print longest word and show steps to prove it's reducible
+    print('Longest reducible word(s):', longest_list)
+    for word in longest_list:
+        print(check_word(word, verbose=True))
+
 
 # Run exercise solutions
 # ex12_1()
 # ex12_2()
 # ex12_3()
+ex12_4()
