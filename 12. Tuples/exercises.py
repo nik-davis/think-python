@@ -2,7 +2,7 @@
 # ----------------------Chapter 12: Tuples---------------------------- #
 #                                                                      #
 
-# TODO: Revisit first two exercises using histogram and invert_dict
+# TODO: Memoize ex 12.4. solution
 
 # 12.1. Write a function called most_frequent that takes a string and prints
 # the letters in decreasing order of frequency. Find text samples from several
