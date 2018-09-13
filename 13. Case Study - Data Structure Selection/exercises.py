@@ -197,7 +197,63 @@ def ex13_3():
         print('{0}: {1}'.format(key, inverted_dict[key]))
 
 
+# 13.4. Modify the previous program to read a word list (see Section 9.1) 
+# and then print all the words in the book that are not in the word list. 
+# How many of them are typos? How many of them are common words that should
+# be in the word list, and how many of them are really obscure?
+
+
+def build_word_list():
+    '''Builds word list from text file
+
+    returns: list of strings
+    '''
+    fin = open('resources/words.txt')
+    word_list = []
+
+    for line in fin:
+        word = line.strip()
+        word_list.append(word)
+
+    return word_list
+
+
+def ex13_4():
+    
+    word_list = build_word_list()
+
+    # For words in book, add to list if not in word list
+    not_in_list = []
+    for key in grimm:
+        if key not in word_list:
+            not_in_list.append(key)
+    
+    # Categorise words; many are hyphenated or have apostrophe, so can be
+    # seperated out. The rest are most likely missing from the list, obscure
+    # or something else (such as a name or number).
+    hyphenated = []
+    apostrophe = []
+    rest = []
+
+    for word in not_in_list:
+        if '-' in word:
+            hyphenated.append(word)
+        elif '’' in word:
+            apostrophe.append(word)
+        else:
+            rest.append(word)
+
+    print('Hyphenated words:', len(hyphenated))
+    print('Words with apostrophe:', len(apostrophe))
+    print('Rest of words:', len(rest))
+    print(rest)
+
+    
+
+
+
 # Run solutions
 # ex13_1()
 ex13_2()
 ex13_3()
+ex13_4()
