@@ -292,6 +292,12 @@ def choose_from_hist(d):
     for key in d:
         for i in range(d[key]):
             t.append(key)
+    
+    # Same result using items method and extend
+    t = []
+    for word, freq in d.items():
+        t.extend([word] * freq)
+    
     return random.choice(t)
 
 def ex13_5():
@@ -329,5 +335,5 @@ def ex13_6():
 # ex13_2()
 # ex13_3()
 # ex13_4()
-# ex13_5()
-ex13_6()
+ex13_5()
+# ex13_6()
