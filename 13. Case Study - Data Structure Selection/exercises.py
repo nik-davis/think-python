@@ -265,9 +265,42 @@ def ex13_4():
 
 import random
 
-for i in range(10):
-    x = random.random()
-    print(x)
+
+def histogram(t):
+    '''Create a histrogram from a list of values
+
+    t: list
+
+    returns: dict of value:frequency
+    '''
+    d = dict()
+    for item in t:
+        d[item] = d.get(item, 0)
+        d[item] += 1
+    return d
+
+
+def choose_from_hist(d):
+    '''Returns a random value from a histogram, chosen with probability
+    in proportion to frequency.
+
+    d: dict of value:frequency
+
+    returns: value
+    '''
+    t = list()
+    for key in d:
+        for i in range(d[key]):
+            t.append(key)
+    return random.choice(t)
+
+def ex13_5():
+    t = ['a', 'a', 'b']
+    hist = histogram(t)
+    print(hist)
+    for i in range(5):
+        value = choose_from_hist(hist)
+        print(value)
 
 
 # Run solutions
@@ -275,3 +308,4 @@ for i in range(10):
 # ex13_2()
 # ex13_3()
 # ex13_4()
+ex13_5()
