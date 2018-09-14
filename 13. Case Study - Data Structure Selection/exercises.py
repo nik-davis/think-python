@@ -303,9 +303,42 @@ def ex13_5():
         print(value)
 
 
+# 13.6. Python provides a data structure called set that provides many 
+# common set operations. Write a program that uses set subtraction to find
+# words in the book that are not in the word list.
+
+
+def subtract(d1, d2):
+    '''Subtraction using sets
+
+    d1, d2: dictionaries
+
+    returns: list
+    '''
+    s1 = set()
+    s2 = set()
+
+    for key in d1:
+        s1.add(key)
+    for key in d2:
+        s2.add(key)
+
+    res = []
+    for s in s1:
+        if s not in s2:
+            res.append(s)
+
+    return res
+
+def ex13_6():
+    d1 = {'a': 0, 'b': 0}
+    d2 = {'b': 0, 'c': 0}
+    subtract(d1, d2)
+
 # Run solutions
 # ex13_1()
 # ex13_2()
 # ex13_3()
 # ex13_4()
-ex13_5()
+# ex13_5()
+ex13_6()
