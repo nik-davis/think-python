@@ -309,31 +309,20 @@ def ex13_5():
 
 
 def subtract(d1, d2):
-    '''Subtraction using sets
+    '''Subtraction using sets. Returns set of keys that appear in d1 but not d2.
 
     d1, d2: dictionaries
 
-    returns: list
+    returns: set
     '''
-    s1 = set()
-    s2 = set()
+    return set(d1) - set(d2)
 
-    for key in d1:
-        s1.add(key)
-    for key in d2:
-        s2.add(key)
-
-    res = []
-    for s in s1:
-        if s not in s2:
-            res.append(s)
-
-    return res
 
 def ex13_6():
     d1 = {'a': 0, 'b': 0}
     d2 = {'b': 0, 'c': 0}
-    subtract(d1, d2)
+    print(subtract(d1, d2))
+
 
 # Run solutions
 # ex13_1()
