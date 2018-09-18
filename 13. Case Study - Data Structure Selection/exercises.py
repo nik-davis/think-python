@@ -277,7 +277,20 @@ def ex13_6():
 #       be inserted in the cumulative sum.
 #   4. Use the index to find the corresponding word in the word list.
 
+hist = histogram(get_words('resources/grimm.txt'))
 
+words = []
+freqs = []
+total = 0
+
+for word, freq in hist.items():
+    words.append(word)
+    total += freq
+    freqs.append(total)
+
+
+
+print(len(words), len(freqs), total)
 # Run solutions
 # ex13_1()
 # ex13_2()
