@@ -316,9 +316,10 @@ def ex13_7():
     hist = histogram(get_words(filename))
     words, freqs, total = setup(hist)
 
-    for i in range(10):
+    print('Random words from Grimm:')
+    for i in range(50):
         word = rand_word(words, freqs, total)
-        print(word)
+        print(word, end=' ')
 
     
 
