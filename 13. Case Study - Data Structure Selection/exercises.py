@@ -17,7 +17,7 @@
 import string
 
 
-def get_words(filename):
+def get_words(filename, skiphead=True):
     '''Returns a lower-cased list of words from a given file with
     punctuation and whitespace removed
 
@@ -31,9 +31,10 @@ def get_words(filename):
     punctuation = string.punctuation + '‘’'
     whitespace = string.whitespace
     
-    for line in fin:
-        if line.startswith('*** START'):
-            break
+    if skiphead == True:
+        for line in fin:
+            if line.startswith('*** START'):
+                break
     
     for line in fin:
         if line.startswith('*** END'):
@@ -50,11 +51,11 @@ def get_words(filename):
 
 def ex13_1():
     '''Run ex 13.1 solution'''
-    t = get_words('resources/goldenbird.txt')
+    t = get_words('resources/goldenbird.txt', skiphead=False)
     
     # Uncomment to print word list:
-    print(t)
-ex13_1()
+    # print(t)
+
 
 # 13.2. Go to Project Gutenberg (http://gutenberg.org ) and download your
 # favorite out-of-copyright book in plain text format.
@@ -72,7 +73,7 @@ ex13_1()
 
 
 t = get_words('resources/grimm.txt')
-# print(t)
+print(t)
 
 
 
@@ -101,7 +102,7 @@ def read_book(filename):
 
     return s
 
-def get_words(s):
+def get_words_old(s):
     '''Returns a lower-cased list of words from a string with
     punctuation and whitespace removed
 
