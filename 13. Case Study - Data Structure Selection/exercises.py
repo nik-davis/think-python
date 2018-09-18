@@ -17,7 +17,7 @@
 import string
 
 
-def get_words(filename, skiphead=True):
+def get_words(filename, skiphead=True, numskip=False):
     '''Returns a lower-cased list of words from a given file with
     punctuation and whitespace removed
 
@@ -28,9 +28,16 @@ def get_words(filename, skiphead=True):
     fin = open(filename, encoding='UTF-8')
 
     word_list = []
+    
     punctuation = string.punctuation + '‘’“”'
     whitespace = string.whitespace
     
+    skippables = punctuation + whitespace
+    
+    numbers = '1234567890'
+    if numskip:
+        skippables += numbers
+
     # Skip gutenberg hearder
     if skiphead == True:
         for line in fin:
@@ -45,7 +52,7 @@ def get_words(filename, skiphead=True):
         line = line.replace('-', ' ')
 
         for word in line.split():
-            word = word.strip(punctuation + whitespace).lower()
+            word = word.strip(skippables).lower()
             if word != '':
                 word_list.append(word)
 
@@ -89,7 +96,7 @@ def histogram(t):
     return d
 
 
-def count_book(filename, bookname='Unknown Title', output=True):
+def count_book(filename, bookname='Unknown Title', output=True, numskip=False):
     '''Count and print total number of words, and number of different words
     in a given book, supplied in txt format
     
@@ -98,7 +105,7 @@ def count_book(filename, bookname='Unknown Title', output=True):
 
     returns: dict of word:frequency
     '''
-    t = get_words(filename)
+    t = get_words(filename, numskip=numskip)
     hist = histogram(t)
 
     total_words = len(t)
@@ -114,12 +121,10 @@ def count_book(filename, bookname='Unknown Title', output=True):
 
 def ex13_2():
     '''Run ex 13.2 solution'''
-    
-    global grimm
     grimm = count_book('resources/grimm.txt', 'Grimm')
-    beowulf = count_book('resources/beowulf.txt', 'Beowulf')
+    beowulf = count_book('resources/beowulf.txt', 'Beowulf', numskip=True)
     frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein')
-ex13_2()
+
 
 # 13.3. Modify the program from the previous exercise to print the 20 most 
 # frequently used words in the book. 
@@ -176,12 +181,12 @@ def build_word_list():
 
 
 def ex13_4():
-    
+    book = count_book('resources/grimm.txt', 'Beowulf', output=False, numskip=False)
     word_list = build_word_list()
 
     # For words in book, add to list if not in word list
     not_in_list = []
-    for key in grimm:
+    for key in book:
         if key not in word_list:
             not_in_list.append(key)
     
@@ -204,7 +209,8 @@ def ex13_4():
     print('Words with apostrophe:', len(apostrophe))
     print('Rest of words:', len(rest))
     print(rest)
-
+    
+ex13_4()
     
 # 13.5.  Write a function named choose_from_hist that takes a histogram 
 # as defined in Section 11.2 and returns a random value from the histogram, 
