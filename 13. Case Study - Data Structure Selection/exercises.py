@@ -17,17 +17,6 @@
 import string
 
 
-def open_file(filename, encoding='UTF-8'):
-    '''Reads a file and returns as string.
-
-    filename: path of file
-    encoding: Optional: encoding to use (default UTF-8)
-
-    returns: string
-    '''
-    return open(filename, encoding=encoding).read()
-    
-
 def get_words(filename):
     '''Returns a lower-cased list of words from a given file with
     punctuation and whitespace removed
@@ -36,15 +25,17 @@ def get_words(filename):
 
     returns: list of strings
     '''
-    s = open_file(filename)
+    fin = open(filename, encoding='UTF-8')
 
-    t = s.split()
+    word_list = []
+    punctuation = string.punctuation + '‘’'
 
-    for i in range(len(t)):
-        t[i] = t[i].lower()
-        t[i] = t[i].strip(string.punctuation)
+    for line in fin:
+        for word in line.split():
+            word = word.strip(punctuation + string.whitespace).lower()
+            word_list.append(word)
 
-    return t
+    return word_list
 
 
 def ex13_1():
@@ -53,6 +44,7 @@ def ex13_1():
     
     # Uncomment to print word list:
     # print(t)
+
 
 # 13.2. Go to Project Gutenberg (http://gutenberg.org ) and download your
 # favorite out-of-copyright book in plain text format.
@@ -335,5 +327,5 @@ def ex13_6():
 # ex13_2()
 # ex13_3()
 # ex13_4()
-ex13_5()
+# ex13_5()
 # ex13_6()
