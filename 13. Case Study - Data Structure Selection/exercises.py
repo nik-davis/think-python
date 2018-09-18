@@ -96,7 +96,7 @@ def histogram(t):
     return d
 
 
-def count_book(filename, bookname='Unknown Title', output=True, numskip=False):
+def count_book(filename, bookname='Unknown Title', output=False, numskip=False):
     '''Count and print total number of words, and number of different words
     in a given book, supplied in txt format
     
@@ -121,9 +121,9 @@ def count_book(filename, bookname='Unknown Title', output=True, numskip=False):
 
 def ex13_2():
     '''Run ex 13.2 solution'''
-    grimm = count_book('resources/grimm.txt', 'Grimm')
-    beowulf = count_book('resources/beowulf.txt', 'Beowulf', numskip=True)
-    frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein')
+    grimm = count_book('resources/grimm.txt', 'Grimm', output=True)
+    beowulf = count_book('resources/beowulf.txt', 'Beowulf', output=True, numskip=True)
+    frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein', output=True)
 
 
 # 13.3. Modify the program from the previous exercise to print the 20 most 
@@ -148,7 +148,7 @@ def most_common(hist):
 
 def ex13_3():
     '''Run solution to ex 13.3.'''
-    book = count_book('resources/grimm.txt', 'Grimm', output=False)
+    book = count_book('resources/grimm.txt', 'Grimm')
 
     # Get sorted list of freq-word pairs
     t = most_common(book)
@@ -181,7 +181,7 @@ def build_word_list():
 
 
 def ex13_4():
-    book = count_book('resources/grimm.txt', 'Grimm', output=False, numskip=False)
+    book = count_book('resources/grimm.txt', 'Grimm')
     word_list = build_word_list()
 
     not_in_list = []
@@ -192,7 +192,6 @@ def ex13_4():
     print('Words not in list:', len(not_in_list))
     print(not_in_list)
     
-ex13_4()
     
 # 13.5.  Write a function named choose_from_hist that takes a histogram 
 # as defined in Section 11.2 and returns a random value from the histogram, 
