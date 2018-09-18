@@ -247,7 +247,7 @@ def ex13_5():
 def subtract(d1, d2):
     '''Subtraction using sets. Returns set of keys that appear in d1 but not d2.
 
-    d1, d2: dictionaries
+    d1, d2: iterables
 
     returns: set
     '''
@@ -257,7 +257,14 @@ def subtract(d1, d2):
 def ex13_6():
     d1 = {'a': 0, 'b': 0}
     d2 = {'b': 0, 'c': 0}
-    print(subtract(d1, d2))
+    print('Set subtraction:', d1, '-', d2, '=', subtract(d1, d2))
+
+    book = count_book('resources/grimm.txt')
+    word_list = build_word_list()
+
+    not_in_list = subtract(book, word_list)
+    print(len(not_in_list))
+    print(not_in_list)
 
 
 # 13.7. Write a program that uses this algorithm to choose a random word from the book. 
