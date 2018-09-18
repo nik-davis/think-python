@@ -88,7 +88,7 @@ def histogram(t):
     return d
 
 
-def count_book(filename, bookname='Unknown Title'):
+def count_book(filename, bookname='Unknown Title', output=True):
     '''Count and print total number of words, and number of different words
     in a given book, supplied in txt format
     
@@ -102,10 +102,11 @@ def count_book(filename, bookname='Unknown Title'):
 
     total_words = len(t)
     words_used = len(hist)
-
-    print('Total number of words in {0}: {1}'.format(bookname, total_words))
-    print('Number of different words used:', words_used)
-    print()
+    
+    if output:
+        print('Total number of words in {0}: {1}'.format(bookname, total_words))
+        print('Number of different words used:', words_used)
+        print()
 
     return hist
 
@@ -123,29 +124,33 @@ def ex13_2():
 # frequently used words in the book. 
 
 
-def invert_dict(d):
-    '''Invert a dictionary, mapping old keys to a list of values where 
-    new keys are the old values.
+def most_common(hist):
+    '''Return a list of words in descending order of frequency.
 
-    d: dict of key:value
+    hist: map from word to frequency
 
-    returns: dict of value:key
+    returns: list of (freq, word) pairs
     '''
-    inverse = dict()
-    for key in d:
-        inverse.setdefault(d[key], []).append(key)
-    return inverse
+    t = []
+
+    for word, freq in hist.items():
+        t.append((freq, word))
+
+    t.sort(reverse=True)
+    return t
+
 
 def ex13_3():
     '''Run solution to ex 13.3.'''
-    # Invert grimm histogram
-    inverted_dict = invert_dict(grimm)
-    # Retrieve sorted list of keys, i.e. most to least frequent indices
-    sorted_inverted_list = sorted(invert_dict(grimm), reverse=True)
-    
-    # Using the top twenty frequencies (also indices), print out the word
-    for key in sorted_inverted_list[:20]:
-        print('{0}: {1}'.format(key, inverted_dict[key]))
+    book = count_book('resources/grimm.txt', 'Grimm', output=False)
+
+    # Get sorted list of freq-word pairs
+    t = most_common(book)
+
+    print('Most frequent words:')
+    for freq, word in t[:20]:
+        gap = ' ' * (15 - len(word))
+        print(' {0}:{1}{2}'.format(word, gap, freq))
 
 
 # 13.4. Modify the previous program to read a word list (see Section 9.1) 
