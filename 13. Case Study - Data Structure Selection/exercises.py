@@ -279,23 +279,37 @@ def ex13_6():
 
 from bisect import bisect
 
-hist = histogram(get_words('resources/grimm.txt'))
 
-words = []
-freqs = []
-total = 0
+def setup(filename):
+    
+    hist = histogram(get_words(filename))
+    words = []
+    freqs = []
+    total = 0
 
-for word, freq in hist.items():
-    words.append(word)
-    total += freq
-    freqs.append(total)
+    for word, freq in hist.items():
+        words.append(word)
+        total += freq
+        freqs.append(total)
 
-n = random.randint(1, total)
-index = bisect(freqs, n)
+    return words, freqs, total
 
-print(words[index])
+def rand_word(words, freqs, total):
+    
+    n = random.randint(1, total)
+    index = bisect(freqs, n)
+    return words[index]
 
-print(len(words), len(freqs), total, index, n)
+def ex13_7():
+    filename = 'resources/grimm.txt'
+    words, freqs, total = setup(filename)
+
+    for i in range(10):
+        word = rand_word(words, freqs, total)
+        print(word)
+
+    
+
 # Run solutions
 # ex13_1()
 # ex13_2()
@@ -303,3 +317,4 @@ print(len(words), len(freqs), total, index, n)
 # ex13_4()
 # ex13_5()
 # ex13_6()
+ex13_7()
