@@ -1,6 +1,4 @@
-# In-text exercises and examples
-
-def histogram(s):
+def histogram_verbose(s):
     '''Returns a dictionary with letter:count pairs
     '''
     d = dict()
@@ -12,7 +10,7 @@ def histogram(s):
     return d
 
 
-def histogram_concise(s):
+def histogram(s):
     '''Histogram using get instead of if statement
     '''
     d = dict()
@@ -22,11 +20,6 @@ def histogram_concise(s):
         d[c] += 1
         print('', c + ':', output, '->', d.get(c, 0))
     return d
-
-
-print('Histogram using get:')
-h = histogram_concise('brontosaurus')
-print(' histogram h =', h)
 
 
 def print_hist(h):
@@ -39,19 +32,11 @@ def print_hist(h):
         print('', c, h[c])
 
 
-print('print_hist:')
-print_hist(h)
-
-
 def print_sorted_hist(h):
     '''Can use sorted function to traverse keys in sorted order.
     '''
     for key in sorted(h):
         print('', key, h[key])
-
-
-print('Sorted histogram:')
-print_sorted_hist(h)
 
 
 def reverse_loopkup(d, v):
@@ -89,11 +74,23 @@ def invert_dict_setdefault(d):
     return inverse
 
 
-hist = histogram('parrot')
-print('Parrot histogram:', hist)
-inverse = invert_dict(hist)
-print('Parrot inverse:', inverse)
+if __name__ == '__main__':
+    # In-text exercises and examples
+    print('Histogram using get:')
+    h = histogram('brontosaurus')
+    print(' histogram h =', h)
 
-# Print key and value from highest to lowest frequency
-for key in sorted(inverse, reverse=True):
-    print(key, inverse[key])
+    print('print_hist:')
+    print_hist(h)
+
+    print('Sorted histogram:')
+    print_sorted_hist(h)
+
+    hist = histogram_verbose('parrot')
+    print('Parrot histogram:', hist)
+    inverse = invert_dict(hist)
+    print('Parrot inverse:', inverse)
+
+    # Print key and value from highest to lowest frequency
+    for key in sorted(inverse, reverse=True):
+        print(key, inverse[key])
