@@ -31,12 +31,14 @@ def get_words(filename, skiphead=True):
     punctuation = string.punctuation + '‘’“”'
     whitespace = string.whitespace
     
+    # Skip gutenberg hearder
     if skiphead == True:
         for line in fin:
             if line.startswith('*** START'):
                 break
     
     for line in fin:
+        # Once reach gutenberg footer, stop
         if line.startswith('*** END'):
             break
         
