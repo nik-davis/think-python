@@ -280,9 +280,13 @@ def ex13_6():
 from bisect import bisect
 
 
-def setup(filename):
-    
-    hist = histogram(get_words(filename))
+def setup(hist):
+    '''Builds required variables for using rand_word.
+
+    filename: path
+
+    returns: tuple of (list of strings, list of ints, int)
+    '''
     words = []
     freqs = []
     total = 0
@@ -295,14 +299,22 @@ def setup(filename):
     return words, freqs, total
 
 def rand_word(words, freqs, total):
-    
+    '''Returns a word picked at random from a book.
+
+    words: list of strings
+    freqs: list of ints
+    total: int
+
+    returns: string
+    '''
     n = random.randint(1, total)
     index = bisect(freqs, n)
     return words[index]
 
 def ex13_7():
     filename = 'resources/grimm.txt'
-    words, freqs, total = setup(filename)
+    hist = histogram(get_words(filename))
+    words, freqs, total = setup(hist)
 
     for i in range(10):
         word = rand_word(words, freqs, total)
