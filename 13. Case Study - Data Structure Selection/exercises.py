@@ -347,7 +347,7 @@ def ex13_7():
 def perform_markov(s, n):
     '''Markov Analysis: Generate a mapping of prefixes to suffixes.
 
-    s: string
+    s: str, input text
     n: int, length of prefix
 
     returns: dict mapping prefix to suffixes
@@ -356,9 +356,10 @@ def perform_markov(s, n):
     prefixes = dict()
 
     words = []
+    strippables = string.whitespace #+ string.punctuation 
 
     for word in s.split():
-        word = word.strip(string.punctuation + string.whitespace).lower()
+        word = word.strip(strippables).lower()
         words.append(word)   
 
     for i in range(len(words) - n):
@@ -366,7 +367,7 @@ def perform_markov(s, n):
         for j in range(i, i+n):
             prefix += words[j],
         suffix = words[i+n]
-        prefixes.setdefault(prefix, []).append(suffix)
+        prefixes.setdefault(prefix, set()).add(suffix)
 
     return prefixes
 
@@ -379,10 +380,20 @@ Vis a vis, its entity. D’you see?
 But can a bee be said to be
 Or not to be an entire bee
 When half the bee is not a bee
-Due to some ancient injury?'''
+Due to some ancient injury?
+Can a bee be a bee or a bee be a bee'''
 
 prefixes = perform_markov(bee, 2)
-print(prefixes)
+
+prefix = random.choice(list(prefixes))
+
+for i in range(100):
+    suffix = random.choice(list(prefixes[prefix]))
+    # for word in prefix:
+    #     print(word, end=' ')
+    print(suffix, end=' ')
+    prefix = (prefix[-1], suffix)
+
 
 
 # Run solutions
