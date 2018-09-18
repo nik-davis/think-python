@@ -277,6 +277,8 @@ def ex13_6():
 #       be inserted in the cumulative sum.
 #   4. Use the index to find the corresponding word in the word list.
 
+from bisect import bisect
+
 hist = histogram(get_words('resources/grimm.txt'))
 
 words = []
@@ -288,9 +290,12 @@ for word, freq in hist.items():
     total += freq
     freqs.append(total)
 
+n = random.randint(1, total)
+index = bisect(freqs, n)
 
+print(words[index])
 
-print(len(words), len(freqs), total)
+print(len(words), len(freqs), total, index, n)
 # Run solutions
 # ex13_1()
 # ex13_2()
