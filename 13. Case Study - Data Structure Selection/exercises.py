@@ -46,7 +46,8 @@ def get_words(filename, skiphead=True):
 
         for word in line.split():
             word = word.strip(punctuation + whitespace).lower()
-            word_list.append(word)
+            if word != '':
+                word_list.append(word)
 
     return word_list
 
@@ -118,7 +119,7 @@ def ex13_2():
     grimm = count_book('resources/grimm.txt', 'Grimm')
     beowulf = count_book('resources/beowulf.txt', 'Beowulf')
     frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein')
-
+ex13_2()
 
 # 13.3. Modify the program from the previous exercise to print the 20 most 
 # frequently used words in the book. 
@@ -147,7 +148,7 @@ def ex13_3():
     # Get sorted list of freq-word pairs
     t = most_common(book)
 
-    print('Most frequent words:')
+    print('Most frequent words in Grimm:')
     for freq, word in t[:20]:
         gap = ' ' * (15 - len(word))
         print(' {0}:{1}{2}'.format(word, gap, freq))
