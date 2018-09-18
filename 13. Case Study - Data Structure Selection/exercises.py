@@ -322,6 +322,17 @@ def ex13_6():
     print(subtract(d1, d2))
 
 
+# 13.7. Write a program that uses this algorithm to choose a random word from the book. 
+#	1. Use keys to get a list of the words in the book.
+#	2. Build a list that contains the cumulative sum of the word frequencies
+#       (see Exercise 10.2). The last item in this list is the total number
+#       of words in the book, n.
+#	3. Choose a random number from 1 to n. Use a bisection search 
+#       (See Exercise 10.10) to find the index where the random number would
+#       be inserted in the cumulative sum.
+#   4. Use the index to find the corresponding word in the word list.
+
+
 # Run solutions
 # ex13_1()
 # ex13_2()
