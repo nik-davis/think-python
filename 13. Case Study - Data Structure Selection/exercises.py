@@ -28,7 +28,7 @@ def get_words(filename, skiphead=True):
     fin = open(filename, encoding='UTF-8')
 
     word_list = []
-    punctuation = string.punctuation + '‘’'
+    punctuation = string.punctuation + '‘’“”'
     whitespace = string.whitespace
     
     if skiphead == True:
@@ -72,80 +72,21 @@ def ex13_1():
 # the most extensive vocabulary?
 
 
-t = get_words('resources/grimm.txt')
-print(t)
+def histogram(t):
+    '''Create a histrogram from iterable
 
+    t: iterable
 
-
-
-def read_book(filename):
-    '''Reads book from file, removing header and footer (works for project
-    gutenberg format books)
-
-    filename: string
-
-    returns: string
-    '''
-    f = open(filename, encoding='UTF-8').readlines()
-    s = str()
-
-    write = False
-    for line in f:
-        if line [:7] == '*** END':
-            write = False
-
-        if write:
-            s += line
-
-        if line[:12] == '*** START OF':
-            write = True
-
-    return s
-
-def get_words_old(s):
-    '''Returns a lower-cased list of words from a string with
-    punctuation and whitespace removed
-
-    s: string
-
-    returns: list of strings
-    '''
-    t = s.split()
-
-    temp_list = list()
-    for word in t:
-        if '--' in word:
-            for word in word.split('--'):
-                temp_list.append(word)
-        else:
-            temp_list.append(word)
-    t = temp_list
-
-    punctuation = string.punctuation + '‘’“”'
-
-    for i in range(len(t)):
-        t[i] = t[i].lower()
-        t[i] = t[i].strip(punctuation)
-
-    return t
-
-
-def count_words(t):
-    '''Count number of times a word appears in a list, storing as values
-    in a dictionary.
-
-    t: list
-
-    returns: dict of word:frequency
+    returns: dict of value:frequency
     '''
     d = dict()
-    for word in t:
-        d[word] = d.get(word, 0)
-        d[word] += 1
+    for item in t:
+        d[item] = d.get(item, 0)
+        d[item] += 1
     return d
 
 
-def count_book(bookname, filename):
+def count_book(filename, bookname='Unknown Title'):
     '''Count and print total number of words, and number of different words
     in a given book, supplied in txt format
     
@@ -154,27 +95,26 @@ def count_book(bookname, filename):
 
     returns: dict of word:frequency
     '''
-    s = read_book(filename)
-    t = get_words(s)
-
-    d = count_words(t)
+    t = get_words(filename)
+    hist = histogram(t)
 
     total_words = len(t)
-    words_used = len(d)
+    words_used = len(hist)
 
     print('Total number of words in {0}: {1}'.format(bookname, total_words))
     print('Number of different words used:', words_used)
     print()
 
-    return d
+    return hist
+
 
 def ex13_2():
     '''Run ex 13.2 solution'''
     
     global grimm
-    grimm = count_book('Grimm', 'resources/grimm.txt')
-    beowulf = count_book('Beowulf', 'resources/beowulf.txt')
-    frankenstein = count_book('Frankenstein', 'resources/frankenstein.txt')
+    grimm = count_book('resources/grimm.txt', 'Grimm')
+    beowulf = count_book('resources/beowulf.txt', 'Beowulf')
+    frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein')
 
 
 # 13.3. Modify the program from the previous exercise to print the 20 most 
@@ -273,20 +213,6 @@ def ex13_4():
 
 
 import random
-
-
-def histogram(t):
-    '''Create a histrogram from a list of values
-
-    t: list
-
-    returns: dict of value:frequency
-    '''
-    d = dict()
-    for item in t:
-        d[item] = d.get(item, 0)
-        d[item] += 1
-    return d
 
 
 def choose_from_hist(d):
