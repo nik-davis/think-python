@@ -263,7 +263,7 @@ def ex13_6():
     word_list = build_word_list()
 
     not_in_list = subtract(book, word_list)
-    print(len(not_in_list))
+    print('Words from grimm not in word list:', len(not_in_list))
     print(not_in_list)
 
 
