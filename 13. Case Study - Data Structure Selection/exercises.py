@@ -307,7 +307,7 @@ def rand_word(words, freqs, total):
 
     returns: string
     '''
-    n = random.randint(1, total)
+    n = random.randint(0, total-1)
     index = bisect(freqs, n)
     return words[index]
 
