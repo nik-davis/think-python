@@ -298,6 +298,7 @@ def setup(hist):
 
     return words, freqs, total
 
+
 def rand_word(words, freqs, total):
     '''Returns a word picked at random from a book.
 
@@ -311,6 +312,7 @@ def rand_word(words, freqs, total):
     index = bisect(freqs, n)
     return words[index]
 
+
 def ex13_7():
     filename = 'resources/grimm.txt'
     hist = histogram(get_words(filename))
@@ -321,7 +323,67 @@ def ex13_7():
         word = rand_word(words, freqs, total)
         print(word, end=' ')
 
+
+# 13.8. Markov analysis:
+#
+# 1. Write a program to read a text from a file and perform Markov analysis.
+#    The result should be a dictionary that maps from prefixes to a collection
+#    of possible suffixes. The collection might be a list, tuple, or dictionary;
+#    it is up to you to make an appropriate choice. You can test your program 
+#    with prefix length two, but you should write the program in a way that
+#    makes it easy to try other lengths.
+#
+# 2. Add a function to the previous program to generate random text based
+#    on the Markov analysis.
+#
+#  	 What happens if you increase the prefix length? Does the random text
+#    make more sense?
+# 
+# 3. Once your program is working, you might want to try a mash-up: 
+#    if you combine text from two or more books, the random text you generate
+#    will blend the vocabulary and phrases from the sources in interesting ways
+
+
+def perform_markov(s, n):
+    '''Markov Analysis: Generate a mapping of prefixes to suffixes.
+
+    s: string
+    n: int, length of prefix
+
+    returns: dict mapping prefix to suffixes
+    '''
     
+    prefixes = dict()
+
+    words = []
+
+    for word in s.split():
+        word = word.strip(string.punctuation + string.whitespace).lower()
+        words.append(word)   
+
+    for i in range(len(words) - n):
+        prefix = tuple()
+        for j in range(i, i+n):
+            prefix += words[j],
+        suffix = words[i+n]
+        prefixes.setdefault(prefix, []).append(suffix)
+
+    return prefixes
+
+
+bee = '''Half a bee, philosophically,
+Must, ipso facto, half not be.
+But half the bee has got to be
+Vis a vis, its entity. D’you see?
+
+But can a bee be said to be
+Or not to be an entire bee
+When half the bee is not a bee
+Due to some ancient injury?'''
+
+prefixes = perform_markov(bee, 2)
+print(prefixes)
+
 
 # Run solutions
 # ex13_1()
@@ -330,4 +392,4 @@ def ex13_7():
 # ex13_4()
 # ex13_5()
 # ex13_6()
-ex13_7()
+# ex13_7()
