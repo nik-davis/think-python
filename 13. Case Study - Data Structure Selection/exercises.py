@@ -29,10 +29,20 @@ def get_words(filename):
 
     word_list = []
     punctuation = string.punctuation + '‘’'
-
+    whitespace = string.whitespace
+    
     for line in fin:
+        if line.startswith('*** START'):
+            break
+    
+    for line in fin:
+        if line.startswith('*** END'):
+            break
+        
+        line = line.replace('-', ' ')
+
         for word in line.split():
-            word = word.strip(punctuation + string.whitespace).lower()
+            word = word.strip(punctuation + whitespace).lower()
             word_list.append(word)
 
     return word_list
@@ -43,8 +53,8 @@ def ex13_1():
     t = get_words('resources/goldenbird.txt')
     
     # Uncomment to print word list:
-    # print(t)
-
+    print(t)
+ex13_1()
 
 # 13.2. Go to Project Gutenberg (http://gutenberg.org ) and download your
 # favorite out-of-copyright book in plain text format.
@@ -61,8 +71,14 @@ def ex13_1():
 # the most extensive vocabulary?
 
 
+t = get_words('resources/grimm.txt')
+# print(t)
+
+
+
+
 def read_book(filename):
-    '''Reads book from file, removing header and footer (works for poroject
+    '''Reads book from file, removing header and footer (works for project
     gutenberg format books)
 
     filename: string
