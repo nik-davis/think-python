@@ -181,34 +181,16 @@ def build_word_list():
 
 
 def ex13_4():
-    book = count_book('resources/grimm.txt', 'Beowulf', output=False, numskip=False)
+    book = count_book('resources/grimm.txt', 'Grimm', output=False, numskip=False)
     word_list = build_word_list()
 
-    # For words in book, add to list if not in word list
     not_in_list = []
-    for key in book:
-        if key not in word_list:
-            not_in_list.append(key)
+    for word in book:
+        if word not in word_list:
+            not_in_list.append(word)
     
-    # Categorise words; many are hyphenated or have apostrophe, so can be
-    # seperated out. The rest are most likely missing from the list, obscure
-    # or something else (such as a name or number).
-    hyphenated = []
-    apostrophe = []
-    rest = []
-
-    for word in not_in_list:
-        if '-' in word:
-            hyphenated.append(word)
-        elif '’' in word:
-            apostrophe.append(word)
-        else:
-            rest.append(word)
-
-    print('Hyphenated words:', len(hyphenated))
-    print('Words with apostrophe:', len(apostrophe))
-    print('Rest of words:', len(rest))
-    print(rest)
+    print('Words not in list:', len(not_in_list))
+    print(not_in_list)
     
 ex13_4()
     
