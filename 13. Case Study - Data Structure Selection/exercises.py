@@ -409,9 +409,10 @@ def print_next_recursive(prefixes, prefix, i):
     print(suffix, end=' ')
     print_next_recursive(prefixes, prefix, i-1)
 
-def generate_markov(text, n):
+
+def generate_markov(text, prefix_length=2, words=100):
     # Generate dictionary mapping prefixes to suffixes
-    prefixes = perform_markov(text, n)
+    prefixes = perform_markov(text, prefix_length)
 
     # Choose first prefix to begin
     prefix = random.choice(list(prefixes))
@@ -422,7 +423,7 @@ def generate_markov(text, n):
 
     print_next_recursive(prefixes, prefix, words)
     
-    for i in range(10):
+    for i in range(words):
         prefix = print_next(prefixes, prefix)
     
 
