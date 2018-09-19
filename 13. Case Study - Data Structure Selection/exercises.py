@@ -395,6 +395,8 @@ def get_suffix(prefixes, prefix):
 
 
 def print_next(prefixes, prefix):
+    '''Generates next prefix and suffix pairing, printing the suffix.
+    '''
     suffix = get_suffix(prefixes, prefix)
     prefix = get_prefix(suffix, *prefix)
     print(suffix, end=' ')
@@ -402,6 +404,11 @@ def print_next(prefixes, prefix):
 
 
 def print_next_recursive(prefixes, prefix, i):
+    '''Recursive version of print_next. Hits max recursion depth if too long,
+    so opted for print_next using for loop.
+    
+    i: int of times to run
+    '''
     if i <= 0:
         return
     suffix = get_suffix(prefixes, prefix)
@@ -411,6 +418,12 @@ def print_next_recursive(prefixes, prefix, i):
 
 
 def generate_markov(text, prefix_length=2, words=100):
+    '''Runs text generation based on Markov analysis.
+
+    text: str
+    prefix_length: int
+    words: int
+    '''
     # Generate dictionary mapping prefixes to suffixes
     prefixes = perform_markov(text, prefix_length)
 
@@ -421,8 +434,10 @@ def generate_markov(text, prefix_length=2, words=100):
     for word in prefix:
         print(word, end=' ')
 
-    print_next_recursive(prefixes, prefix, words)
+    # Recursive version for learning purposes. Hits max recursion depth
+    # print_next_recursive(prefixes, prefix, words)
     
+    # Generate and print words
     for i in range(words):
         prefix = print_next(prefixes, prefix)
     
