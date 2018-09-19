@@ -347,7 +347,7 @@ def ex13_7():
 #    will blend the vocabulary and phrases from the sources in interesting ways
 
 
-def perform_markov(s, n, allow_punc=True):
+def perform_markov(filename, n, skiphead=True, allow_punc=True):
     '''Markov Analysis: Generate a mapping of prefixes to suffixes.
 
     s: str, input text
@@ -359,16 +359,7 @@ def perform_markov(s, n, allow_punc=True):
     
     prefixes = dict()
 
-    words = []
-    
-    if allow_punc:
-        strippables = string.whitespace
-    else:
-        strippables = string.whitespace + string.punctuation
-
-    for word in s.split():
-        word = word.strip(strippables).lower()
-        words.append(word)   
+    words = get_words(filename, skiphead=skiphead, allow_punc=allow_punc)
 
     for i in range(len(words) - n):
         prefix = tuple()
@@ -425,7 +416,7 @@ def print_next_recursive(prefixes, prefix, i):
     print_next_recursive(prefixes, prefix, i-1)
 
 
-def generate_markov(text, prefix_length=2, words=100, allow_punc=True):
+def generate_markov(filename, prefix_length=2, words=100, allow_punc=True, skiphead=True):
     '''Runs text generation based on Markov analysis.
 
     text: str
@@ -434,7 +425,7 @@ def generate_markov(text, prefix_length=2, words=100, allow_punc=True):
     allow_punc: bool. Set to False to remove punctuation from generated text
     '''
     # Generate dictionary mapping prefixes to suffixes
-    prefixes = perform_markov(text, prefix_length, allow_punc)
+    prefixes = perform_markov(filename, prefix_length, allow_punc=allow_punc, skiphead=skiphead)
 
     # Choose first prefix to begin
     prefix = random.choice(list(prefixes))
@@ -450,22 +441,13 @@ def generate_markov(text, prefix_length=2, words=100, allow_punc=True):
     for i in range(words):
         prefix = print_next(prefixes, prefix)
     
+print('Bee:')
+generate_markov('resources/bee.txt', skiphead=False)
 
-bee = '''Half a bee, philosophically,
-Must, ipso facto, half not be.
-But half the bee has got to be
-Vis a vis, its entity. D’you see?
+print('\nGrimm:')
+generate_markov('resources/grimm.txt')    
 
-But can a bee be said to be
-Or not to be an entire bee
-When half the bee is not a bee
-Due to some ancient injury? 
-
-Half a bee, philosophically,''' # First line repeated so can continue after 'injury?'
-
-generate_markov(bee)    
-
-fin = open('resources/grimm.txt')
+markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in such and such dirty walking they could not, however, reach the castle lived an old mouse hole. ‘good night, my masters!’ said he, ‘but a white handkerchief out of yonder brook, for i wish for a moment; but the heat grew greater as soon as day dawned the two elder brothers would have slept soundly enough.’ when they took up a long while after, he went merrily home. the wedding feast was announced, the youth again said quite sadly: ‘if i had caught itself in the air!’"
 
 # Run solutions
 # ex13_1()
