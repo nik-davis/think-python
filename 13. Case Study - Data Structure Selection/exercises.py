@@ -440,14 +440,39 @@ def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=Tr
     # Generate and print words
     for i in range(words):
         prefix = print_next(prefixes, prefix)
+
+
+def generate_mashup(*filenames, prefix_length=2, words=100):
+    '''Runs text generation with two files.
+    '''
+    word_list = []
+    for f in filenames:
+        word_list += get_words(f, allow_punc=True, lower=False, numskip=True)
+   
+    prefixes = perform_markov(word_list, prefix_length)
+    prefix = random.choice(list(prefixes))
     
-print('Bee:')
-generate_markov('resources/bee.txt', words=10, skiphead=False)
+    for word in prefix:
+        print(word, end=' ')
 
-print('\nGrimm:')
-generate_markov('resources/grimm.txt', prefix_length=4)    
+    for i in range(words):
+        prefix = print_next(prefixes, prefix)
+    
 
-markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in such and such dirty walking they could not, however, reach the castle lived an old mouse hole. ‘good night, my masters!’ said he, ‘but a white handkerchief out of yonder brook, for i wish for a moment; but the heat grew greater as soon as day dawned the two elder brothers would have slept soundly enough.’ when they took up a long while after, he went merrily home. the wedding feast was announced, the youth again said quite sadly: ‘if i had caught itself in the air!’"
+def ex13_8():
+    '''Run Markov analysis solution.
+    '''
+    print('Bee:')
+    generate_markov('resources/bee.txt', words=10, skiphead=False)
+
+    print('\n\nGrimm:')
+    generate_markov('resources/grimm.txt', prefix_length=4)    
+
+    markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in such and such dirty walking they could not, however, reach the castle lived an old mouse hole. ‘good night, my masters!’ said he, ‘but a white handkerchief out of yonder brook, for i wish for a moment; but the heat grew greater as soon as day dawned the two elder brothers would have slept soundly enough.’ when they took up a long while after, he went merrily home. the wedding feast was announced, the youth again said quite sadly: ‘if i had caught itself in the air!’"
+
+    print('\n\nEmma, Beowulf and Frankenstein mashup:')
+    filenames = ('resources/emma.txt', 'resources/beowulf.txt', 'resources/frankenstein.txt')
+    generate_mashup(*filenames, prefix_length=2, words=500)
 
 # Run solutions
 # ex13_1()
@@ -457,3 +482,4 @@ markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in
 # ex13_5()
 # ex13_6()
 # ex13_7()
+ex13_8()
