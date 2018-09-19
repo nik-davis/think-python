@@ -373,10 +373,14 @@ def perform_markov(s, n):
 
 
 def get_prefix(suffix, *args):
-    prefix = args
-    prefix += (suffix,)
+    '''Generates new prefix for Markov Analysis text generation. 
+    
+    suffix: string
+    args: tuple of strings
 
-    return prefix
+    returns: tuple of strings
+    '''
+    return args[1:] + (suffix,)
 
 
 def get_suffix(prefixes, prefix):
@@ -398,7 +402,7 @@ def generate_markov(text, n):
 
     for i in range(10):
         suffix = get_suffix(prefixes, prefix)
-        prefix = get_prefix(suffix, *prefix[1:])
+        prefix = get_prefix(suffix, *prefix)
         print(suffix, end=' ')
     
 
