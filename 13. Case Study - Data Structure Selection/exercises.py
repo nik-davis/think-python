@@ -356,6 +356,7 @@ def perform_markov(s, n, allow_punc=True):
     
     prefixes = dict()
 
+    # TODO: Modify get_words to allow punctuation option and remove code here
     words = []
     
     if allow_punc:
@@ -462,6 +463,7 @@ Half a bee, philosophically,''' # First line repeated so can continue after 'inj
 
 generate_markov(bee)    
 
+fin = open('resources/grimm.txt')
 
 # Run solutions
 # ex13_1()
