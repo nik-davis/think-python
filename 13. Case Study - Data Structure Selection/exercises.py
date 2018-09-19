@@ -393,12 +393,21 @@ def get_suffix(prefixes, prefix):
     '''
     return random.choice(list(prefixes[prefix]))
 
+
 def print_next(prefixes, prefix):
     suffix = get_suffix(prefixes, prefix)
     prefix = get_prefix(suffix, *prefix)
     print(suffix, end=' ')
     return prefix
 
+
+def print_next_recursive(prefixes, prefix, i):
+    if i <= 0:
+        return
+    suffix = get_suffix(prefixes, prefix)
+    prefix = get_prefix(suffix, *prefix)
+    print(suffix, end=' ')
+    print_next_recursive(prefixes, prefix, i-1)
 
 def generate_markov(text, n):
     # Generate dictionary mapping prefixes to suffixes
@@ -411,6 +420,8 @@ def generate_markov(text, n):
     for word in prefix:
         print(word, end=' ')
 
+    print_next_recursive(prefixes, prefix, words)
+    
     for i in range(10):
         prefix = print_next(prefixes, prefix)
     
