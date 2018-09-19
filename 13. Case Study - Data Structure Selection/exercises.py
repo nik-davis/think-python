@@ -372,15 +372,11 @@ def perform_markov(s, n):
     return prefixes
 
 
-def get_prefix(prefix, suffix):
-    new_prefix = tuple()
+def get_prefix(suffix, *args):
+    prefix = args
+    prefix += (suffix,)
 
-    for word in prefix[1:]:
-        new_prefix += (word,)
-
-    new_prefix += (suffix,)
-
-    return new_prefix
+    return prefix
 
 
 def get_suffix(prefixes, prefix):
@@ -400,9 +396,9 @@ def generate_markov(text, n):
     for word in prefix:
         print(word, end=' ')
 
-    for i in range(100):
+    for i in range(10):
         suffix = get_suffix(prefixes, prefix)
-        prefix = get_prefix(prefix, suffix)
+        prefix = get_prefix(suffix, *prefix[1:])
         print(suffix, end=' ')
     
 
