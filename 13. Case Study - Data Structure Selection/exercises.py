@@ -17,7 +17,7 @@
 import string
 
 
-def get_words(filename, skiphead=True, numskip=False, allow_punc=False):
+def get_words(filename, skiphead=True, numskip=False, allow_punc=False, lower=True):
     '''Returns a lower-cased list of words from a given file with
     punctuation and whitespace removed
 
@@ -55,7 +55,9 @@ def get_words(filename, skiphead=True, numskip=False, allow_punc=False):
         line = line.replace('-', ' ')
 
         for word in line.split():
-            word = word.strip(skippables).lower()
+            word = word.strip(skippables)
+            if lower:
+                word = word.lower()
             if word != '':
                 word_list.append(word)
 
@@ -412,7 +414,7 @@ def print_next_recursive(prefixes, prefix, i):
     print_next_recursive(prefixes, prefix, i-1)
 
 
-def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=True):
+def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=True, lower=False):
     '''Runs text generation based on Markov analysis.
 
     text: str
@@ -421,7 +423,7 @@ def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=Tr
     punc: bool. Set to False to remove punctuation from generated text
     skiphead: bool. Set to False if not gutenberg text
     '''
-    word_list = get_words(filename, skiphead=skiphead, allow_punc=punc)
+    word_list = get_words(filename, skiphead=skiphead, allow_punc=punc, lower=lower)
     # Generate dictionary mapping prefixes to suffixes
     prefixes = perform_markov(word_list, prefix_length)
 
@@ -443,7 +445,7 @@ print('Bee:')
 generate_markov('resources/bee.txt', words=10, skiphead=False)
 
 print('\nGrimm:')
-generate_markov('resources/grimm.txt')    
+generate_markov('resources/grimm.txt', prefix_length=4)    
 
 markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in such and such dirty walking they could not, however, reach the castle lived an old mouse hole. ‘good night, my masters!’ said he, ‘but a white handkerchief out of yonder brook, for i wish for a moment; but the heat grew greater as soon as day dawned the two elder brothers would have slept soundly enough.’ when they took up a long while after, he went merrily home. the wedding feast was announced, the youth again said quite sadly: ‘if i had caught itself in the air!’"
 
