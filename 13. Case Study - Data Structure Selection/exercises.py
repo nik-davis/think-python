@@ -462,16 +462,6 @@ Half a bee, philosophically,''' # First line repeated so can continue after 'inj
 
 generate_markov(bee)    
 
-# print()
-# while True:
-#     inp = input('')
-#     if inp == 'exit':
-#         break
-#     try:
-#         eval(inp)
-#     except:
-#         print('Fail')
-
 
 # Run solutions
 # ex13_1()
