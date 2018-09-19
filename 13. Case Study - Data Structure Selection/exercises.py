@@ -347,19 +347,15 @@ def ex13_7():
 #    will blend the vocabulary and phrases from the sources in interesting ways
 
 
-def perform_markov(filename, n, skiphead=True, allow_punc=True):
+def perform_markov(words, n):
     '''Markov Analysis: Generate a mapping of prefixes to suffixes.
 
-    s: str, input text
+    words: list of str
     n: int, length of prefix
-    no_punc: bool
 
     returns: dict mapping prefix to suffixes
     '''
-    
     prefixes = dict()
-
-    words = get_words(filename, skiphead=skiphead, allow_punc=allow_punc)
 
     for i in range(len(words) - n):
         prefix = tuple()
@@ -416,16 +412,18 @@ def print_next_recursive(prefixes, prefix, i):
     print_next_recursive(prefixes, prefix, i-1)
 
 
-def generate_markov(filename, prefix_length=2, words=100, allow_punc=True, skiphead=True):
+def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=True):
     '''Runs text generation based on Markov analysis.
 
     text: str
     prefix_length: int
     words: int
-    allow_punc: bool. Set to False to remove punctuation from generated text
+    punc: bool. Set to False to remove punctuation from generated text
+    skiphead: bool. Set to False if not gutenberg text
     '''
+    word_list = get_words(filename, skiphead=skiphead, allow_punc=punc)
     # Generate dictionary mapping prefixes to suffixes
-    prefixes = perform_markov(filename, prefix_length, allow_punc=allow_punc, skiphead=skiphead)
+    prefixes = perform_markov(word_list, prefix_length)
 
     # Choose first prefix to begin
     prefix = random.choice(list(prefixes))
@@ -442,7 +440,7 @@ def generate_markov(filename, prefix_length=2, words=100, allow_punc=True, skiph
         prefix = print_next(prefixes, prefix)
     
 print('Bee:')
-generate_markov('resources/bee.txt', skiphead=False)
+generate_markov('resources/bee.txt', words=10, skiphead=False)
 
 print('\nGrimm:')
 generate_markov('resources/grimm.txt')    
