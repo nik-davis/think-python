@@ -393,6 +393,12 @@ def get_suffix(prefixes, prefix):
     '''
     return random.choice(list(prefixes[prefix]))
 
+def print_next(prefixes, prefix):
+    suffix = get_suffix(prefixes, prefix)
+    prefix = get_prefix(suffix, *prefix)
+    print(suffix, end=' ')
+    return prefix
+
 
 def generate_markov(text, n):
     # Generate dictionary mapping prefixes to suffixes
@@ -406,9 +412,7 @@ def generate_markov(text, n):
         print(word, end=' ')
 
     for i in range(10):
-        suffix = get_suffix(prefixes, prefix)
-        prefix = get_prefix(suffix, *prefix)
-        print(suffix, end=' ')
+        prefix = print_next(prefixes, prefix)
     
 
 bee = '''Half a bee, philosophically,
