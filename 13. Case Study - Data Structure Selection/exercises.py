@@ -384,9 +384,14 @@ def get_prefix(suffix, *args):
 
 
 def get_suffix(prefixes, prefix):
-    suffix = random.choice(list(prefixes[prefix]))
+    '''Generates random suffix from prefixes.
 
-    return suffix
+    prefixes: mapping from prefix to suffixes
+    prefix: tuple of strings
+
+    returns: string
+    '''
+    return random.choice(list(prefixes[prefix]))
 
 
 def generate_markov(text, n):
