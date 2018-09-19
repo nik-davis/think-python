@@ -344,11 +344,12 @@ def ex13_7():
 #    will blend the vocabulary and phrases from the sources in interesting ways
 
 
-def perform_markov(s, n):
+def perform_markov(s, n, allow_punc=True):
     '''Markov Analysis: Generate a mapping of prefixes to suffixes.
 
     s: str, input text
     n: int, length of prefix
+    no_punc: bool
 
     returns: dict mapping prefix to suffixes
     '''
@@ -356,7 +357,11 @@ def perform_markov(s, n):
     prefixes = dict()
 
     words = []
-    strippables = string.whitespace #+ string.punctuation 
+    
+    if allow_punc:
+        strippables = string.whitespace
+    else:
+        strippables = string.whitespace + string.punctuation
 
     for word in s.split():
         word = word.strip(strippables).lower()
@@ -417,15 +422,16 @@ def print_next_recursive(prefixes, prefix, i):
     print_next_recursive(prefixes, prefix, i-1)
 
 
-def generate_markov(text, prefix_length=2, words=100):
+def generate_markov(text, prefix_length=2, words=100, allow_punc=True):
     '''Runs text generation based on Markov analysis.
 
     text: str
     prefix_length: int
     words: int
+    allow_punc: bool. Set to False to remove punctuation from generated text
     '''
     # Generate dictionary mapping prefixes to suffixes
-    prefixes = perform_markov(text, prefix_length)
+    prefixes = perform_markov(text, prefix_length, allow_punc)
 
     # Choose first prefix to begin
     prefix = random.choice(list(prefixes))
@@ -454,7 +460,7 @@ Due to some ancient injury?
 
 Half a bee, philosophically,''' # First line repeated so can continue after 'injury?'
 
-generate_markov(bee, 4)    
+generate_markov(bee)    
 
 # print()
 # while True:
