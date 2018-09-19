@@ -380,20 +380,40 @@ Vis a vis, its entity. D’you see?
 But can a bee be said to be
 Or not to be an entire bee
 When half the bee is not a bee
-Due to some ancient injury?
-Can a bee be a bee or a bee be a bee'''
+Due to some ancient injury? 
 
-prefixes = perform_markov(bee, 2)
+Half a bee, philosophically,'''
+
+prefixes = perform_markov(bee, 4)
+print(prefixes)
 
 prefix = random.choice(list(prefixes))
+for word in prefix:
+    print(word, end=' ')
 
 for i in range(100):
     suffix = random.choice(list(prefixes[prefix]))
     # for word in prefix:
     #     print(word, end=' ')
     print(suffix, end=' ')
-    prefix = (prefix[-1], suffix)
+    
+    new_prefix = tuple()
+    for word in prefix[1:]:
+        new_prefix += (word,)
+    new_prefix += (suffix,)
+    
+    prefix = new_prefix
+    
 
+# print()
+# while True:
+#     inp = input('')
+#     if inp == 'exit':
+#         break
+#     try:
+#         eval(inp)
+#     except:
+#         print('Fail')
 
 
 # Run solutions
