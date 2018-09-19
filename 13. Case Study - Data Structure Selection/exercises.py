@@ -17,7 +17,7 @@
 import string
 
 
-def get_words(filename, skiphead=True, numskip=False):
+def get_words(filename, skiphead=True, numskip=False, allow_punc=False):
     '''Returns a lower-cased list of words from a given file with
     punctuation and whitespace removed
 
@@ -32,7 +32,10 @@ def get_words(filename, skiphead=True, numskip=False):
     punctuation = string.punctuation + '‘’“”'
     whitespace = string.whitespace
     
-    skippables = punctuation + whitespace
+    if allow_punc:
+        skippables = whitespace
+    else:
+        skippables = punctuation + whitespace
     
     numbers = '1234567890'
     if numskip:
@@ -356,7 +359,6 @@ def perform_markov(s, n, allow_punc=True):
     
     prefixes = dict()
 
-    # TODO: Modify get_words to allow punctuation option and remove code here
     words = []
     
     if allow_punc:
