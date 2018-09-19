@@ -372,6 +372,40 @@ def perform_markov(s, n):
     return prefixes
 
 
+def get_prefix(prefix, suffix):
+    new_prefix = tuple()
+
+    for word in prefix[1:]:
+        new_prefix += (word,)
+
+    new_prefix += (suffix,)
+
+    return new_prefix
+
+
+def get_suffix(prefixes, prefix):
+    suffix = random.choice(list(prefixes[prefix]))
+
+    return suffix
+
+
+def generate_markov(text, n):
+    # Generate dictionary mapping prefixes to suffixes
+    prefixes = perform_markov(text, n)
+
+    # Choose first prefix to begin
+    prefix = random.choice(list(prefixes))
+    
+    # Print first words
+    for word in prefix:
+        print(word, end=' ')
+
+    for i in range(100):
+        suffix = get_suffix(prefixes, prefix)
+        prefix = get_prefix(prefix, suffix)
+        print(suffix, end=' ')
+    
+
 bee = '''Half a bee, philosophically,
 Must, ipso facto, half not be.
 But half the bee has got to be
@@ -382,28 +416,9 @@ Or not to be an entire bee
 When half the bee is not a bee
 Due to some ancient injury? 
 
-Half a bee, philosophically,'''
+Half a bee, philosophically,''' # First line repeated so can continue after 'injury?'
 
-prefixes = perform_markov(bee, 4)
-print(prefixes)
-
-prefix = random.choice(list(prefixes))
-for word in prefix:
-    print(word, end=' ')
-
-for i in range(100):
-    suffix = random.choice(list(prefixes[prefix]))
-    # for word in prefix:
-    #     print(word, end=' ')
-    print(suffix, end=' ')
-    
-    new_prefix = tuple()
-    for word in prefix[1:]:
-        new_prefix += (word,)
-    new_prefix += (suffix,)
-    
-    prefix = new_prefix
-    
+generate_markov(bee, 4)    
 
 # print()
 # while True:
