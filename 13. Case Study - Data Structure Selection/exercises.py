@@ -485,7 +485,7 @@ def ex13_8():
 # the most common word has rank 1, the second most common has rank 2, etc.
 #
 # Zipf’s law describes a relationship between the ranks and frequencies of words
-# in natural languages (http://en.wikipedia.org/wiki/Zipf's_law). Specifically,
+# in natural languages (http://en.wikipedia.org/wiki/Zipfs_law). Specifically,
 # it predicts that the frequency, f , of the word with rank r is:
 #
 #	f=cr^(−s)
@@ -503,6 +503,37 @@ def ex13_8():
 # log f and log r. Use the graphing program of your choice to plot the results
 # and check whether they form a straight line. Can you estimate the value of s?
 
+from math import log
+import matplotlib.pyplot as plt
+
+
+words = get_words('resources/grimm.txt')
+hist = histogram(words)
+
+ranked = most_common(hist)
+
+print(ranked[:10], end='\n\n')
+
+x_vals = []
+y_vals = []
+
+print('Word\tFreq\tlog f\t\tlog r')
+print('----\t----\t------------\t------------')
+
+for i in range(len(ranked[:135])):
+    rank = i+1
+    freq, word = ranked[i]
+    x = log(rank)
+    y = log(freq)
+
+    x_vals.append(x)
+    y_vals.append(y)
+
+    print('{0}\t{1}\t{2}\t{3}'.format(word, freq, round(y, 10), round(x, 10)))
+
+plt.plot(x_vals, y_vals)
+
+plt.show()
 
 
 # Run solutions
@@ -513,4 +544,4 @@ def ex13_8():
 # ex13_5()
 # ex13_6()
 # ex13_7()
-ex13_8()
+# ex13_8()
