@@ -504,41 +504,42 @@ def ex13_8():
 # and check whether they form a straight line. Can you estimate the value of s?
 
 from math import log
+
 import matplotlib.pyplot as plt
 
+def ex13_9():
+    words = get_words('resources/grimm.txt')
+    hist = histogram(words)
 
-words = get_words('resources/grimm.txt')
-hist = histogram(words)
+    ranked = most_common(hist)
 
-ranked = most_common(hist)
+    print(ranked[:10], end='\n\n')
 
-print(ranked[:10], end='\n\n')
+    x_vals = []
+    y_vals = []
 
-x_vals = []
-y_vals = []
+    print('Word\tFreq\tlog f\t\tlog r')
+    print('----\t----\t------------\t------------')
 
-print('Word\tFreq\tlog f\t\tlog r')
-print('----\t----\t------------\t------------')
+    for i in range(len(ranked[:135])):
+        rank = i+1
+        freq, word = ranked[i]
+        x = log(rank)
+        y = log(freq)
 
-for i in range(len(ranked[:135])):
-    rank = i+1
-    freq, word = ranked[i]
-    x = log(rank)
-    y = log(freq)
+        x_vals.append(x)
+        y_vals.append(y)
 
-    x_vals.append(x)
-    y_vals.append(y)
+        print('{0}\t{1}\t{2}\t{3}'.format(word, freq, round(y, 10), round(x, 10)))
 
-    print('{0}\t{1}\t{2}\t{3}'.format(word, freq, round(y, 10), round(x, 10)))
-
-scale = 'log'
-plt.xscale(scale)
-plt.yscale(scale)
-plt.title('Zipf plot')
-plt.xlabel('Rank')
-plt.ylabel('Frequency')
-plt.plot(x_vals, y_vals)
-plt.show()
+    scale = 'log'
+    plt.xscale(scale)
+    plt.yscale(scale)
+    plt.title('Zipf plot')
+    plt.xlabel('Rank')
+    plt.ylabel('Frequency')
+    plt.plot(x_vals, y_vals)
+    plt.show()
 
 
 # Run solutions
@@ -550,3 +551,4 @@ plt.show()
 # ex13_6()
 # ex13_7()
 # ex13_8()
+ex13_9()
