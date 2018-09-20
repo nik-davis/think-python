@@ -497,7 +497,7 @@ def ex13_8():
 #
 # So if you plot log f versus log r, you should get a straight line with
 # slope −s and intercept log c.
-# 
+#
 # Write a program that reads a text from a file, counts word frequencies,
 # and prints one line for each word, in descending order of frequency, with
 # log f and log r. Use the graphing program of your choice to plot the results
@@ -507,30 +507,32 @@ from math import log
 
 import matplotlib.pyplot as plt
 
+
 def ex13_9():
     words = get_words('resources/grimm.txt')
     hist = histogram(words)
 
     ranked = most_common(hist)
 
-    print(ranked[:10], end='\n\n')
-
     x_vals = []
     y_vals = []
 
-    print('Word\tFreq\tlog f\t\tlog r')
-    print('----\t----\t------------\t------------')
+    print('Word\t  Freq\tlog f\t\tlog r')
+    print('----\t  ----\t------------\t------------')
 
     for i in range(len(ranked[:135])):
         rank = i+1
         freq, word = ranked[i]
+       
         x = log(rank)
         y = log(freq)
 
         x_vals.append(x)
         y_vals.append(y)
 
-        print('{0}\t{1}\t{2}\t{3}'.format(word, freq, round(y, 10), round(x, 10)))
+        padding = ' ' * (10 - len(word))
+        print('{0}{1}{2}\t{3}\t{4}'.format(
+            word, padding, freq, round(y, 10), round(x, 10)))
 
     scale = 'log'
     plt.xscale(scale)
