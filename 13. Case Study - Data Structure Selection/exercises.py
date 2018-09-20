@@ -4,14 +4,14 @@
 
 # 13.1. Write a program that reads a file, breaks each line into words, strips
 # whitespace and punctuation from the words, and converts them to lowercase.
-# Hint: The string module provides a string named whitespace, which contains 
-# space, tab, newline, etc., and punctuation which contains the punctuation 
+# Hint: The string module provides a string named whitespace, which contains
+# space, tab, newline, etc., and punctuation which contains the punctuation
 # characters.
 #
 #	>>> import string
 #	>>> string.punctuation
 #	'!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~'
-#	
+#
 # Also, you might consider using the string methods strip, replace and translate
 
 import string
@@ -28,15 +28,15 @@ def get_words(filename, skiphead=True, numskip=False, allow_punc=False, lower=Tr
     fin = open(filename, encoding='UTF-8')
 
     word_list = []
-    
+
     punctuation = string.punctuation + '‘’“”'
     whitespace = string.whitespace
-    
+
     if allow_punc:
         skippables = whitespace
     else:
         skippables = punctuation + whitespace
-    
+
     numbers = '1234567890'
     if numskip:
         skippables += numbers
@@ -46,12 +46,12 @@ def get_words(filename, skiphead=True, numskip=False, allow_punc=False, lower=Tr
         for line in fin:
             if line.startswith('*** START'):
                 break
-    
+
     for line in fin:
         # Once reach gutenberg footer, stop
         if line.startswith('*** END'):
             break
-        
+
         line = line.replace('-', ' ')
 
         for word in line.split():
@@ -67,7 +67,7 @@ def get_words(filename, skiphead=True, numskip=False, allow_punc=False, lower=Tr
 def ex13_1():
     '''Run ex 13.1 solution'''
     t = get_words('resources/goldenbird.txt', skiphead=False)
-    
+
     # Uncomment to print word list:
     # print(t)
 
@@ -76,7 +76,7 @@ def ex13_1():
 # favorite out-of-copyright book in plain text format.
 #
 # Modify your program from the previous exercise to read the book you
-# downloaded, skip over the header information at the beginning of the 
+# downloaded, skip over the header information at the beginning of the
 # file, and process the rest of the words as before.
 #
 # Then modify the program to count the total number of words in the book,
@@ -104,7 +104,7 @@ def histogram(t):
 def count_book(filename, bookname='Unknown Title', output=False, numskip=False):
     '''Count and print total number of words, and number of different words
     in a given book, supplied in txt format
-    
+
     bookname: string
     filename: string
 
@@ -115,9 +115,10 @@ def count_book(filename, bookname='Unknown Title', output=False, numskip=False):
 
     total_words = len(t)
     words_used = len(hist)
-    
+
     if output:
-        print('Total number of words in {0}: {1}'.format(bookname, total_words))
+        print('Total number of words in {0}: {1}'.format(
+            bookname, total_words))
         print('Number of different words used:', words_used)
         print()
 
@@ -127,12 +128,14 @@ def count_book(filename, bookname='Unknown Title', output=False, numskip=False):
 def ex13_2():
     '''Run ex 13.2 solution'''
     grimm = count_book('resources/grimm.txt', 'Grimm', output=True)
-    beowulf = count_book('resources/beowulf.txt', 'Beowulf', output=True, numskip=True)
-    frankenstein = count_book('resources/frankenstein.txt', 'Frankenstein', output=True)
+    beowulf = count_book('resources/beowulf.txt',
+                         'Beowulf', output=True, numskip=True)
+    frankenstein = count_book(
+        'resources/frankenstein.txt', 'Frankenstein', output=True)
 
 
-# 13.3. Modify the program from the previous exercise to print the 20 most 
-# frequently used words in the book. 
+# 13.3. Modify the program from the previous exercise to print the 20 most
+# frequently used words in the book.
 
 
 def most_common(hist):
@@ -164,8 +167,8 @@ def ex13_3():
         print(' {0}:{1}{2}'.format(word, gap, freq))
 
 
-# 13.4. Modify the previous program to read a word list (see Section 9.1) 
-# and then print all the words in the book that are not in the word list. 
+# 13.4. Modify the previous program to read a word list (see Section 9.1)
+# and then print all the words in the book that are not in the word list.
 # How many of them are typos? How many of them are common words that should
 # be in the word list, and how many of them are really obscure?
 
@@ -193,22 +196,22 @@ def ex13_4():
     for word in book:
         if word not in word_list:
             not_in_list.append(word)
-    
+
     print('Words not in list:', len(not_in_list))
     print(not_in_list)
-    
-    
-# 13.5.  Write a function named choose_from_hist that takes a histogram 
-# as defined in Section 11.2 and returns a random value from the histogram, 
-# chosen with probability in proportion to frequency. 
-# 
+
+
+# 13.5.  Write a function named choose_from_hist that takes a histogram
+# as defined in Section 11.2 and returns a random value from the histogram,
+# chosen with probability in proportion to frequency.
+#
 # For example, for this histogram:
 #
 #	>>> t = ['a', 'a', 'b']
 #	>>> hist = histogram(t)
 #	>>> hist
 #	{'a': 2, 'b': 1}
-#	
+#
 # your function should return 'a' with probability 2/3 and 'b' with probability 1/3.
 
 
@@ -227,13 +230,14 @@ def choose_from_hist(d):
     for key in d:
         for i in range(d[key]):
             t.append(key)
-    
+
     # Same result using items method and extend
     t = []
     for word, freq in d.items():
         t.extend([word] * freq)
-    
+
     return random.choice(t)
+
 
 def ex13_5():
     t = ['a', 'a', 'b']
@@ -244,7 +248,7 @@ def ex13_5():
         print(value)
 
 
-# 13.6. Python provides a data structure called set that provides many 
+# 13.6. Python provides a data structure called set that provides many
 # common set operations. Write a program that uses set subtraction to find
 # words in the book that are not in the word list.
 
@@ -272,12 +276,12 @@ def ex13_6():
     print(not_in_list)
 
 
-# 13.7. Write a program that uses this algorithm to choose a random word from the book. 
+# 13.7. Write a program that uses this algorithm to choose a random word from the book.
 #	1. Use keys to get a list of the words in the book.
 #	2. Build a list that contains the cumulative sum of the word frequencies
 #       (see Exercise 10.2). The last item in this list is the total number
 #       of words in the book, n.
-#	3. Choose a random number from 1 to n. Use a bisection search 
+#	3. Choose a random number from 1 to n. Use a bisection search
 #       (See Exercise 10.10) to find the index where the random number would
 #       be inserted in the cumulative sum.
 #   4. Use the index to find the corresponding word in the word list.
@@ -334,7 +338,7 @@ def ex13_7():
 # 1. Write a program to read a text from a file and perform Markov analysis.
 #    The result should be a dictionary that maps from prefixes to a collection
 #    of possible suffixes. The collection might be a list, tuple, or dictionary;
-#    it is up to you to make an appropriate choice. You can test your program 
+#    it is up to you to make an appropriate choice. You can test your program
 #    with prefix length two, but you should write the program in a way that
 #    makes it easy to try other lengths.
 #
@@ -343,8 +347,8 @@ def ex13_7():
 #
 #  	 What happens if you increase the prefix length? Does the random text
 #    make more sense?
-# 
-# 3. Once your program is working, you might want to try a mash-up: 
+#
+# 3. Once your program is working, you might want to try a mash-up:
 #    if you combine text from two or more books, the random text you generate
 #    will blend the vocabulary and phrases from the sources in interesting ways
 
@@ -371,7 +375,7 @@ def perform_markov(words, n):
 
 def get_prefix(suffix, *args):
     '''Generates new prefix for Markov Analysis text generation. 
-    
+
     suffix: string
     args: tuple of strings
 
@@ -403,7 +407,7 @@ def print_next(prefixes, prefix):
 def print_next_recursive(prefixes, prefix, i):
     '''Recursive version of print_next. Hits max recursion depth if too long,
     so opted for print_next using for loop.
-    
+
     i: int of times to run
     '''
     if i <= 0:
@@ -423,20 +427,21 @@ def generate_markov(filename, prefix_length=2, words=100, punc=True, skiphead=Tr
     punc: bool. Set to False to remove punctuation from generated text
     skiphead: bool. Set to False if not gutenberg text
     '''
-    word_list = get_words(filename, skiphead=skiphead, allow_punc=punc, lower=lower)
+    word_list = get_words(filename, skiphead=skiphead,
+                          allow_punc=punc, lower=lower)
     # Generate dictionary mapping prefixes to suffixes
     prefixes = perform_markov(word_list, prefix_length)
 
     # Choose first prefix to begin
     prefix = random.choice(list(prefixes))
-    
+
     # Print first words
     for word in prefix:
         print(word, end=' ')
 
     # Recursive version for learning purposes. Hits max recursion depth
     # print_next_recursive(prefixes, prefix, words)
-    
+
     # Generate and print words
     for i in range(words):
         prefix = print_next(prefixes, prefix)
@@ -448,16 +453,16 @@ def generate_mashup(*filenames, prefix_length=2, words=100):
     word_list = []
     for f in filenames:
         word_list += get_words(f, allow_punc=True, lower=False, numskip=True)
-   
+
     prefixes = perform_markov(word_list, prefix_length)
     prefix = random.choice(list(prefixes))
-    
+
     for word in prefix:
         print(word, end=' ')
 
     for i in range(words):
         prefix = print_next(prefixes, prefix)
-    
+
 
 def ex13_8():
     '''Run Markov analysis solution.
@@ -466,13 +471,39 @@ def ex13_8():
     generate_markov('resources/bee.txt', words=10, skiphead=False)
 
     print('\n\nGrimm:')
-    generate_markov('resources/grimm.txt', prefix_length=4)    
+    generate_markov('resources/grimm.txt', prefix_length=4)
 
     markov1 = "‘see, what a blockhead that brother of mine is! he will tear you in such and such dirty walking they could not, however, reach the castle lived an old mouse hole. ‘good night, my masters!’ said he, ‘but a white handkerchief out of yonder brook, for i wish for a moment; but the heat grew greater as soon as day dawned the two elder brothers would have slept soundly enough.’ when they took up a long while after, he went merrily home. the wedding feast was announced, the youth again said quite sadly: ‘if i had caught itself in the air!’"
 
     print('\n\nEmma, Beowulf and Frankenstein mashup:')
-    filenames = ('resources/emma.txt', 'resources/beowulf.txt', 'resources/frankenstein.txt')
+    filenames = ('resources/emma.txt', 'resources/beowulf.txt',
+                 'resources/frankenstein.txt')
     generate_mashup(*filenames, prefix_length=2, words=500)
+
+
+# 13.9. The “rank” of a word is its position in a list of words sorted by frequency:
+# the most common word has rank 1, the second most common has rank 2, etc.
+#
+# Zipf’s law describes a relationship between the ranks and frequencies of words
+# in natural languages (http://en.wikipedia.org/wiki/Zipf's_law). Specifically,
+# it predicts that the frequency, f , of the word with rank r is:
+#
+#	f=cr^(−s)
+#
+# where s and c are parameters that depend on the language and the text.
+# If you take the logarithm of both sides of this equation, you get:
+#
+#	log f = log c − s log r
+#
+# So if you plot log f versus log r, you should get a straight line with
+# slope −s and intercept log c.
+# 
+# Write a program that reads a text from a file, counts word frequencies,
+# and prints one line for each word, in descending order of frequency, with
+# log f and log r. Use the graphing program of your choice to plot the results
+# and check whether they form a straight line. Can you estimate the value of s?
+
+
 
 # Run solutions
 # ex13_1()
