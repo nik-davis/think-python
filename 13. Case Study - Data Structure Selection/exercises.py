@@ -531,8 +531,13 @@ for i in range(len(ranked[:135])):
 
     print('{0}\t{1}\t{2}\t{3}'.format(word, freq, round(y, 10), round(x, 10)))
 
+scale = 'log'
+plt.xscale(scale)
+plt.yscale(scale)
+plt.title('Zipf plot')
+plt.xlabel('Rank')
+plt.ylabel('Frequency')
 plt.plot(x_vals, y_vals)
-
 plt.show()
 
 
