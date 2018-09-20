@@ -1,0 +1,5 @@
+open returns a file object that provides methods for working with the file.
+The write method puts data into the file.
+File object keeps track of position, so if call write again, adds to end
+42
+In 2.5 years I have spotted 3 camels
