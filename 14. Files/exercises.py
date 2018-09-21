@@ -11,20 +11,45 @@
 # If an error occurs while opening, reading, writing or closing files, 
 # your program should catch the exception, print an error message, and exit.
 
-def sed(pattern, repl, filename1, filename2):
+
+def sed(pattern, repl, source, output):
+	'''Reads a source file a writes to output file. Replaces any existences of
+	pattern with repl.
+
+	pattern: string
+	repl: string
+	source: string filename
+	output: string filename
+	'''
 	try:
-		fin = open(filename1)
-		fout = open(filename2, 'w')
+		fin = open(source, 'r')
+		fout = open(output, 'w')
 
 		for line in fin:
-			if pattern in line:
-				line = line.replace(pattern, repl)
+			line = line.replace(pattern, repl)
 			fout.write(line)
+
+		fin.close()
+		fout.close()
 	except:
-		print('Error Message')
+		print('An error occurred, but this program is too rudimentary to tell you what happened.')
+		print('Have a nice day.')
+		exit()
 
-sed('monkey', 'donkey', '14. Files/file.txt', '14. Files/fileout.txt')
 
+def ex14_1():
+	pattern = 'monkey'
+	repl = 'donkey'
+	source = '14. Files/file.txt'
+	output = source + '.replaced'
+
+	print('Running sed...')
+	sed(pattern, repl, source, output)
+	print('...sed complete! No errors.')
+
+	print('Running sed...')
+	sed(pattern, repl, '14. Files/badfile.txt', output)
+	print('...sed complete! No errors.')
 
 
 # Exercise 14.2. If you download my solution to Exercise 12.2 from
@@ -59,3 +84,7 @@ sed('monkey', 'donkey', '14. Files/file.txt', '14. Files/fileout.txt')
 #  3. To double-check, you can use the Unix command diff.
 #
 #  Solution: http://thinkpython2.com/code/find_duplicates.py
+
+
+if __name__ == '__main__':
+	ex14_1()
