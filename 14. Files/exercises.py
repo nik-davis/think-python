@@ -63,9 +63,46 @@ def ex14_1():
 # read_anagrams should look up a word and return a list of its anagrams.
 #	Solution: http://thinkpython2.com/code/anagram_db.py.
 
+import shelve
+
+from anagram_sets import all_anagrams, signature
 
 
+def store_anagrams(filename, anagram_map):
+	'''Stores anagrams from a dictionary in a shelf.
 
+	filename: string file name of shelf
+	anagram_map: dictionary mapping strings to list of anagrams
+	'''
+	with shelve.open(filename, 'c') as db:
+		for word, word_list in anagram_map.items():
+			db[word] = word_list
+
+
+def read_anagrams(word, db):
+	'''Looks up word in shelf and returns list of its anagrams
+
+	filename: string file name of shelf
+	word: string to look up
+	'''
+	with shelve.open(db) as db:
+		sig = signature(word)
+		try:
+			return db[sig]
+		except:
+			return []
+
+
+def ex14_2():
+	command='make_db'
+
+	if command == 'make_db':
+		# anagram_map = all_anagrams('resources/words.txt')
+		anagram_map = dict()
+		anagram_map['opst'] = ['opts', 'post', 'pots', 'spot', 'stop', 'tops']
+		store_anagrams('14. Files/anagrams.db', anagram_map)
+
+	print(read_anagrams('pots', '14. Files/anagrams.db'))
 
 
 # Exercise 14.3. In a large collection of MP3 files, there may be more 
@@ -87,4 +124,6 @@ def ex14_1():
 
 
 if __name__ == '__main__':
-	ex14_1()
+	# ex14_1()
+	# ex14_2()
+	pass
