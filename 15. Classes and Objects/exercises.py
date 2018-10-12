@@ -19,6 +19,8 @@
 # inside the circle. Or as a more challenging version, return True if any
 # part of the Rectangle falls inside the circle.
 
+import copy
+
 
 class Point:
     """Represents a point in 2-D space."""
@@ -77,19 +79,24 @@ def rect_in_circle(r, c):
     r: Rectangle
     c: Circle
     """
-    # Use point_in_circle to check
+    corners = []
+
+    # Fetch corner of rectangle
     p = r.corner
-    if not point_in_circle(c, p):
-        return False
-    p.x = p.x + box.width
-    if not point_in_circle(c, p):
-        return False
+    # Save corner in list using copy to avoid aliasing
+    corners.append(copy.copy(p))
+    # Calculate and store each subsequent corner
+    p.x += box.width
+    corners.append(copy.copy(p))
     p.y = p.y + box.height
-    if not point_in_circle(c, p):
-        return False
+    corners.append(copy.copy(p))
     p.x = p.x - box.width
-    if not point_in_circle(c, p):
-        return False
+    corners.append(copy.copy(p))
+
+    # Iterate through corners and check if in circle
+    for point in corners:
+        if not point_in_circle(c, point):
+            return False
     return True
 
 
