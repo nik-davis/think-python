@@ -52,6 +52,8 @@ def point_in_circle(c, p):
 
     c: Circle
     p: Point
+
+    returns: Bool
     """
     if p.x <= c.center.x + c.radius and p.x >= c.center.x - c.radius:
         if p.y <= c.center.y + c.radius and p.y >= c.center.y - c.radius:
@@ -72,12 +74,12 @@ dot.y = 25.0
 print('point_in_circle:', point_in_circle(ring, dot))
 
 
-def rect_in_circle(r, c):
-    """Checks if a rectangle lies entirely within, or on the boundary of,
-    a circle.
+def get_rect_corners(r):
+    """Returns a list of corners for a rectangle
 
     r: Rectangle
-    c: Circle
+
+    returns: List of Points
     """
     corners = []
 
@@ -92,6 +94,20 @@ def rect_in_circle(r, c):
     corners.append(copy.copy(p))
     p.x = p.x - box.width
     corners.append(copy.copy(p))
+
+    return corners
+
+
+def rect_in_circle(r, c):
+    """Checks if a rectangle lies entirely within, or on the boundary of,
+    a circle.
+
+    r: Rectangle
+    c: Circle
+
+    returns: Bool
+    """
+    corners = get_rect_corners(r)
 
     # Iterate through corners and check if in circle
     for point in corners:
