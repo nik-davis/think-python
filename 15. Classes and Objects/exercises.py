@@ -20,6 +20,7 @@
 # part of the Rectangle falls inside the circle.
 
 import copy
+from math import sqrt
 
 
 class Point:
@@ -55,9 +56,11 @@ def point_in_circle(c, p):
 
     returns: Bool
     """
-    if p.x <= c.center.x + c.radius and p.x >= c.center.x - c.radius:
-        if p.y <= c.center.y + c.radius and p.y >= c.center.y - c.radius:
-            return True
+    dx = p.x - c.center.x
+    dy = p.y - c.center.y
+
+    if sqrt(dx**2 + dy**2) <= c.radius:
+        return True
     return False
 
 
@@ -65,13 +68,19 @@ dot = Point()
 dot.x = 170
 dot.y = 90
 
-print('point_in_circle:', point_in_circle(ring, dot))
+print('point_in_circle (True):', point_in_circle(ring, dot))
 
 dot2 = Point()
-dot.x = 75.0
-dot.y = 25.0
+dot2.x = 75.0
+dot2.y = 25.0
 
-print('point_in_circle:', point_in_circle(ring, dot))
+print('point_in_circle (False):', point_in_circle(ring, dot2))
+
+dot3 = Point()
+dot3.x = 75.0
+dot3.y = 100.0
+
+print('point_in_circle (True):', point_in_circle(ring, dot3))
 
 
 def get_rect_corners(r):
@@ -117,11 +126,11 @@ def rect_in_circle(r, c):
 
 
 box = Rectangle()
-box.height = 10.0
-box.width = 10.0
+box.height = 1.0
+box.width = 1.0
 box.corner = Point()
-box.corner.x = 150.0
-box.corner.y = 100.0
+box.corner.x = 75.0
+box.corner.y = 25.0
 
 print('rect_in_circle:', rect_in_circle(box, ring))
 
