@@ -124,3 +124,23 @@ box.corner.x = 150.0
 box.corner.y = 100.0
 
 print('rect_in_circle:', rect_in_circle(box, ring))
+
+
+def rect_circle_overlap(r, c):
+    """Checks if any corner of a rectangle lies within, or on the boundary
+    of, a circle.
+
+    r: Rectangle
+    c: Circle
+
+    returns: Bool
+    """
+    corners = get_rect_corners(r)
+
+    for point in corners:
+        if point_in_circle(c, point):
+            return True
+    return False
+
+
+print('rect_circle_overlap:', rect_circle_overlap(box, ring))
