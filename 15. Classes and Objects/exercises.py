@@ -61,13 +61,13 @@ dot = Point()
 dot.x = 170
 dot.y = 90
 
-print(point_in_circle(ring, dot))
+print('point_in_circle:', point_in_circle(ring, dot))
 
 dot2 = Point()
 dot.x = 75.0
 dot.y = 25.0
 
-print(point_in_circle(ring, dot))
+print('point_in_circle:', point_in_circle(ring, dot))
 
 
 def rect_in_circle(r, c):
@@ -78,11 +78,26 @@ def rect_in_circle(r, c):
     c: Circle
     """
     # Use point_in_circle to check
+    p = r.corner
+    if not point_in_circle(c, p):
+        return False
+    p.x = p.x + box.width
+    if not point_in_circle(c, p):
+        return False
+    p.y = p.y + box.height
+    if not point_in_circle(c, p):
+        return False
+    p.x = p.x - box.width
+    if not point_in_circle(c, p):
+        return False
+    return True
 
 
 box = Rectangle()
 box.height = 10.0
-box.width  = 10.0
+box.width = 10.0
 box.corner = Point()
 box.corner.x = 150.0
 box.corner.y = 100.0
+
+print('rect_in_circle:', rect_in_circle(box, ring))
